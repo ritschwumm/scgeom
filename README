@@ -1,1 +1,9 @@
-an alternative to swing's geometry classes
+An alternative to swing's geometry classes.
+
+To build this code, get and install SBT from 
+	http://code.google.com/p/simple-build-tool/ .
+
+Use these commands to build:
+	git clone git@github.com:ritschwumm/scgeom.git
+	cd scgeom
+	sbt update publish-local
