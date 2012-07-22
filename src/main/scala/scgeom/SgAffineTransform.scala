@@ -26,6 +26,7 @@ object SgAffineTransform {
 			identity translate origin.addinv rotate rotate scale scale translate position
 	*/
 }
+
 case class SgAffineTransform(delegate:AffineTransform) {
 	def apply(point:Point2D):Point2D	= 
 			delegate transform (point, null)
@@ -95,5 +96,6 @@ case class SgAffineTransform(delegate:AffineTransform) {
 		SgAffineTransform(out)
 	}
 	
-	private def cloneDelegate:AffineTransform	= delegate.clone.asInstanceOf[AffineTransform]
+	private def cloneDelegate:AffineTransform	= 
+			delegate.clone.asInstanceOf[AffineTransform]
 }

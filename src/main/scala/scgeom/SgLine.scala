@@ -4,12 +4,16 @@ import java.awt.geom.{ Line2D }
 
 object SgLine {
 	val zero	= SgLine(SgPoint.zero, SgPoint.zero)
+	val one		= SgLine(SgPoint.zero, SgPoint.one)
 	
 	def fromStartSize(start:SgPoint, size:SgPoint):SgLine	= SgLine(start, start+size)
 	def fromEndSize(end:SgPoint, size:SgPoint):SgLine		= SgLine(end-size, end)
 	
-	def fromLine2D(value:Line2D):SgLine	= SgLine(SgPoint(value.getX1, value.getY1), SgPoint(value.getX2, value.getY2))
+	def fromLine2D(value:Line2D):SgLine	= SgLine(
+			SgPoint(value.getX1, value.getY1), 
+			SgPoint(value.getX2, value.getY2))
 }
+
 case class SgLine(start:SgPoint, end:SgPoint) {
 	def size:SgPoint	= end - start
 	def spanX:SgSpan	= SgSpan(start.x, end.x)

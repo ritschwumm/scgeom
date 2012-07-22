@@ -5,10 +5,15 @@ import java.awt.geom.{ Rectangle2D }
 object SgRectangle {
 	val zero	= SgRectangle(SgSpan.zero, SgSpan.zero)
 	
-	def fromPosSize(pos:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(SgSpan(pos.x, pos.x+size.x), SgSpan(pos.y, pos.y+size.y))
+	def fromPosSize(pos:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
+			SgSpan(pos.x, pos.x+size.x),
+			SgSpan(pos.y, pos.y+size.y))
 	
-	def fromRectangle2D(value:Rectangle2D):SgRectangle		= fromPosSize(SgPoint(value.getX, value.getY), SgPoint(value.getWidth, value.getHeight))
+	def fromRectangle2D(value:Rectangle2D):SgRectangle		= fromPosSize(
+			SgPoint(value.getX, value.getY), 
+			SgPoint(value.getWidth, value.getHeight))
 }
+
 case class SgRectangle(x:SgSpan, y:SgSpan) {
 	def topLeft:SgPoint		= SgPoint(x.start, y.start)
 	def topRight:SgPoint	= SgPoint(x.end, y.start)
@@ -42,10 +47,6 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 	def move(offset:SgPoint):SgRectangle	= SgRectangle(
 			x move offset.x, 
 			y move offset.y)
-			
-	def inflate(offset:Double):SgRectangle	= SgRectangle(
-			x inflate offset, 
-			y inflate offset)
 			
 	def inset(insets:SgRectangleInsets):SgRectangle	= SgRectangle(
 			x inset insets.x,

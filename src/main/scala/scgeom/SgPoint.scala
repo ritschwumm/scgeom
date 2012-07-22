@@ -4,11 +4,12 @@ import java.awt.geom.{ Point2D, Dimension2D }
 
 object SgPoint {
 	val zero	= SgPoint(0,0)
+	val one		= SgPoint(1,1)
 	
 	def fromPoint2D(value:Point2D):SgPoint			= SgPoint(value.getX, value.getY)
 	def fromDimension2D(value:Dimension2D):SgPoint	= SgPoint(value.getWidth, value.getHeight)
 	
-	def fromPair(value:Pair[Double,Double]):SgPoint			= SgPoint(value._1, value._2)
+	def fromPair(value:Pair[Double,Double]):SgPoint	= SgPoint(value._1, value._2)
 }
 
 case class SgPoint(x:Double, y:Double) {

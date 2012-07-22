@@ -6,7 +6,11 @@ import scala.math._
 
 object SgSpanInsets {
 	val zero	= SgSpanInsets(0,0)
+	val one		= SgSpanInsets(1,1)
+	
+	def symmetric(size:Double):SgSpanInsets	= SgSpanInsets(size, size)
 }
+
 case class SgSpanInsets(start:Double, end:Double) {
 	def empty:Boolean	= start == 0 && end == 0
 	
@@ -30,13 +34,4 @@ case class SgSpanInsets(start:Double, end:Double) {
 	def /(scale:Double):SgSpanInsets	= SgSpanInsets(
 			start	/ scale,
 			end		/ scale)
-	/*
-	def inflate(both:Double):SgSpanInsets	= SgSpanInsets(
-			start	+ both,
-			end	+ both)
-			
-	def inflate(start:Double, end:Double):SgSpanInsets	= SgSpanInsets(
-			this.start	+ start,
-			this.end	+ end)
-	*/
 }

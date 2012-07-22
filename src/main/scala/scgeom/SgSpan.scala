@@ -2,10 +2,12 @@ package scgeom
 
 object SgSpan {
 	val zero	= SgSpan(0,0)
+	val one		= SgSpan(0,1)
 	
 	def fromStartSize(start:Double, size:Double):SgSpan	= SgSpan(start, start+size)
 	def fromEndSize(end:Double, size:Double):SgSpan		= SgSpan(end-size, end)
 }
+
 case class SgSpan(start:Double, end:Double) {
 	def empty:Boolean	= start == end
 	def size:Double		= end - start
@@ -45,19 +47,11 @@ case class SgSpan(start:Double, end:Double) {
 		thatNormal.start < thisNormal.end && thatNormal.end > thatNormal.start
 	}		
 		
-	def inset(start:Double, end:Double):SgSpan	= SgSpan(
-			this.start + start,
-			this.end   - end)
+	def inset(insets:SgSpanInsets):SgSpan	= SgSpan(
+			start	+ insets.start,
+			end		- insets.end)
 			
 	def move(offset:Double):SgSpan	= SgSpan(
 			start	+ offset, 
 			end		+ offset)
-			
-	def inflate(offset:Double):SgSpan	= SgSpan(
-			start	- offset, 
-			end		+ offset)
-			
-	def inset(insets:SgSpanInsets):SgSpan	= SgSpan(
-			start	+ insets.start,
-			end		- insets.end)
 }

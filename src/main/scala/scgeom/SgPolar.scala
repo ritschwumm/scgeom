@@ -2,7 +2,9 @@ package scgeom
 
 object SgPolar {
 	val zero	= SgPolar(0,0)
+	val one		= SgPolar(1,1)
 }
+
 case class SgPolar(length:Double, angle:Double) {
 	import scala.math._
 	
@@ -20,4 +22,3 @@ case class SgPolar(length:Double, angle:Double) {
 	
 	def toKartesian:SgPoint	= SgPoint(x, y)
 }
-
