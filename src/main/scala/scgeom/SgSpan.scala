@@ -6,6 +6,17 @@ object SgSpan {
 	
 	def fromStartSize(start:Double, size:Double):SgSpan	= SgSpan(start, start+size)
 	def fromEndSize(end:Double, size:Double):SgSpan		= SgSpan(end-size, end)
+	
+	def fromExtreme(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
+			extreme match {
+				case SgStart	=> SgSpan(master, slave)
+				case SgEnd		=> SgSpan(slave, master)
+			}
+	def fromExtremeSize(extreme:SgExtreme, point:Double, size:Double):SgSpan	=
+			extreme match {
+				case SgStart	=> fromStartSize(point, size)
+				case SgEnd		=> fromEndSize(point, size)
+			}
 }
 
 case class SgSpan(start:Double, end:Double) {
@@ -55,4 +66,24 @@ case class SgSpan(start:Double, end:Double) {
 	def move(offset:Double):SgSpan	= SgSpan(
 			start	+ offset, 
 			end		+ offset)
+			
+	def rectangleTo(that:SgSpan):SgRectangle	= SgRectangle(this, that)
+	
+	def get(extreme:SgExtreme):Double	= 
+			extreme match {
+				case SgStart	=> start
+				case SgEnd		=> end
+			}
+	
+	def set(extreme:SgExtreme, it:Double):SgSpan	=
+			extreme match {
+				case SgStart	=> SgSpan(it, end)
+				case SgEnd		=> SgSpan(start, it)
+			}
+	
+	def modify(extreme:SgExtreme, it:Double=>Double):SgSpan	=
+			extreme match {
+				case SgStart	=> SgSpan(it(start), end)
+				case SgEnd		=> SgSpan(start, it(end))
+			}
 }

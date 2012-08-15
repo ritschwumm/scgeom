@@ -56,7 +56,7 @@ case class SgAffineTransform(delegate:AffineTransform) {
 			modify { out => out rotate theta }
 	
 	def inverse:Option[SgAffineTransform]	= 
-			catching(classOf[NoninvertibleTransformException]).opt { SgAffineTransform(delegate.createInverse) }
+			catching(classOf[NoninvertibleTransformException]) opt SgAffineTransform(delegate.createInverse)
 	
 	def andThen(that:SgAffineTransform):SgAffineTransform	= 
 			modify { out => out concatenate that.delegate }

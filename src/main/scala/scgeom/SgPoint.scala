@@ -6,6 +6,12 @@ object SgPoint {
 	val zero	= SgPoint(0,0)
 	val one		= SgPoint(1,1)
 	
+	def fromOrientation(orientation:SgOrientation, master:Double, slave:Double):SgPoint	=
+			orientation match {
+				case SgHorizontal	=> SgPoint(master, slave)
+				case SgVertical		=> SgPoint(slave, master)
+			}
+			
 	def fromPoint2D(value:Point2D):SgPoint			= SgPoint(value.getX, value.getY)
 	def fromDimension2D(value:Dimension2D):SgPoint	= SgPoint(value.getWidth, value.getHeight)
 	
@@ -71,6 +77,26 @@ case class SgPoint(x:Double, y:Double) {
 	// cross product analog 2: perpendicular vector
 	crossG:		function()			Point(this.y, -this.x),
 	*/
+	
+	def get(orientation:SgOrientation):Double	= 
+			orientation match {
+				case SgHorizontal	=> x
+				case SgVertical		=> y
+			}
+	
+	def set(orientation:SgOrientation, it:Double):SgPoint	=
+			orientation match {
+				case SgHorizontal	=> SgPoint(it, y)
+				case SgVertical		=> SgPoint(x, it)
+			}
+	
+	def modify(orientation:SgOrientation, it:Double=>Double):SgPoint	=
+			orientation match {
+				case SgHorizontal	=> SgPoint(it(x), y)
+				case SgVertical		=> SgPoint(x, it(y))
+			}
+			
+	def lineTo(that:SgPoint):SgLine			= SgLine(this, that)
 	
 	def toPolar	= SgPolar(length, angle)
 	
