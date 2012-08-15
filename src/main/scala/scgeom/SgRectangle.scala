@@ -22,7 +22,10 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 	def center:SgPoint		= SgPoint(x.center, y.center)
 	
 	def empty:Boolean		= x.empty && y.empty
+	def normal:Boolean		= x.normal && y.normal
 	def size:SgPoint		= SgPoint(x.size, y.size)
+	
+	def swap:SgRectangle	= SgRectangle(x,y)
 	
 	def normalize:SgRectangle	= SgRectangle(
 			x.normalize,

@@ -19,6 +19,8 @@ case class SgLine(start:SgPoint, end:SgPoint) {
 	def spanX:SgSpan	= SgSpan(start.x, end.x)
 	def spanY:SgSpan	= SgSpan(start.y, end.y)
 	
+	def swap:SgLine		= SgLine(end, start)
+	
 	def move(offset:SgPoint):SgLine = SgLine(
 			start+offset, 
 			end+offset)

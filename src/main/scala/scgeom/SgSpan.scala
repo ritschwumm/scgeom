@@ -10,14 +10,15 @@ object SgSpan {
 
 case class SgSpan(start:Double, end:Double) {
 	def empty:Boolean	= start == end
+	def normal:Boolean	= start <= end
 	def size:Double		= end - start
 	def min:Double		= start min end
 	def max:Double		= start max end
 	def center:Double	= (start + end) / 2
 	
-	def normalize:SgSpan	= 
-			if (start > end)	SgSpan(end, start) else this
-			//SgSpan(min, max)
+	def swap:SgSpan	= SgSpan(end, start)
+	
+	def normalize:SgSpan	= if (normal) this else swap
 	
 	def union(that:SgSpan):SgSpan	= SgSpan(
 			this.min min that.min, 

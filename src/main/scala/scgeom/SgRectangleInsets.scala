@@ -30,6 +30,8 @@ case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 			x.size,
 			y.size)
 		
+	def swap:SgRectangleInsets	= SgRectangleInsets(y, x)
+	
 	def inverse:SgRectangleInsets	= SgRectangleInsets(
 			x.inverse, 
 			y.inverse)

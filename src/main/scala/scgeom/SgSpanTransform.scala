@@ -13,4 +13,6 @@ case class SgSpanTransform(from:SgSpan, to:SgSpan) {
 	def scale(value:Double):Double	= value * to.size / from.size
 	
 	def inverse:SgSpanTransform	= SgSpanTransform(to, from)
+	
+	def swap:SgSpanTransform	= SgSpanTransform(from.swap, to)
 }
