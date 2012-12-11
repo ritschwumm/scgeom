@@ -1,18 +1,31 @@
 package scgeom
 
 object SgSpanTransform {
-	val identity	= SgSpanTransform(SgSpan.one, SgSpan.one)
+	val identity	= SgSpanTransform(1.0, 0.0)
+	
+	def fromSpans(from:SgSpan, to:SgSpan):SgSpanTransform	= {
+		val factor	= to.size / from.size
+		val summand	= to.start - from.start * factor
+		SgSpanTransform(factor, summand)
+	}
 }
 	
-case class SgSpanTransform(from:SgSpan, to:SgSpan) {
-	def apply(span:SgSpan):SgSpan	= SgSpan(
-			apply(span.start),
-			apply(span.end))
+case class SgSpanTransform(factor:Double, summand:Double) {
+	def inverse:SgSpanTransform	= 
+			SgSpanTransform(
+					1/factor, 
+					-summand/factor)
+		
+	//------------------------------------------------------------------------------
 	
-	def apply(value:Double):Double	= scale(value - from.start) + to.start
-	def scale(value:Double):Double	= value * to.size / from.size
+	def apply(value:Double):Double	= transform(value)
+
+	def transform(value:Double):Double	= value * factor + summand
+	def scale(value:Double):Double		= value * factor
+	def offset(value:Double):Double		= value + summand
 	
-	def inverse:SgSpanTransform	= SgSpanTransform(to, from)
-	
-	def swap:SgSpanTransform	= SgSpanTransform(from.swap, to)
+	def transformSpan(value:SgSpan):SgSpan	=
+			SgSpan(
+					transform(value.start), 
+					transform(value.end))
 }

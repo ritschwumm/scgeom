@@ -72,6 +72,11 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 			(this.x intersects that.x) &&
 			(this.y intersects that.y)
 			
+	def containsPoint(point:SgPoint) = {
+		(x containsValue point.x)	&&
+		(y containsValue point.y)
+	}
+	
 	def contains(that:SgRectangle):Boolean	=
 			(this.x contains that.x) &&
 			(this.y contains that.y)

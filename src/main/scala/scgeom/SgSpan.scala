@@ -46,7 +46,7 @@ case class SgSpan(start:Double, end:Double) {
 			this.min max that.min,
 			this.max min that.max)
 	
-	def contains(pos:Double) = {
+	def containsValue(pos:Double) = {
 		val	normal	= normalize
 		pos >= normal.start && pos < normal.end
 	}

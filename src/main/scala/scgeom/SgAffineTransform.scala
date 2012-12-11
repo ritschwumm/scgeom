@@ -15,11 +15,13 @@ object SgAffineTransform {
 			SgAffineTransform(AffineTransform getRotateInstance	(theta, center.x, center.y))
 	
 	// TODO test
-	def spans(x:SgSpanTransform, y:SgSpanTransform):SgAffineTransform	=
-			bounds(SgRectangle(x.from,y.from), SgRectangle(x.to, y.to))
+	def fromRectangleTransform(xy:SgRectangleTransform):SgAffineTransform	=
+			identity	translate	
+			xy.summand	scale
+			xy.factor
 			
 	// TODO test
-	def bounds(from:SgRectangle, to:SgRectangle):SgAffineTransform	=
+	def fromRectangles(from:SgRectangle, to:SgRectangle):SgAffineTransform	=
 			identity				translate
 			to.topLeft				scale
 			to.size					scale 
