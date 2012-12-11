@@ -4,6 +4,9 @@ object SgSpan {
 	val zero	= SgSpan(0,0)
 	val one		= SgSpan(0,1)
 	
+	def fromSize(size:Double):SgSpan	= 
+			SgSpan(0, size)
+		
 	def fromStartSize(start:Double, size:Double):SgSpan	= 
 			SgSpan(start, start+size)
 		
@@ -74,7 +77,11 @@ case class SgSpan(start:Double, end:Double) {
 			start	+ offset, 
 			end		+ offset)
 			
-	def rectangleTo(that:SgSpan):SgRectangle	= SgRectangle(this, that)
+	def lineWith(that:SgSpan):SgLine	= SgLine(
+			SgPoint(this.start, that.start), 
+			SgPoint(this.end, that.end))
+	def rectangleWith(that:SgSpan):SgRectangle	=
+			SgRectangle(this, that)
 	
 	def get(extreme:SgExtreme):Double	= 
 			extreme match {

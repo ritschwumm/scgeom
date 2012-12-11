@@ -1,11 +1,11 @@
 package scgeom
 
 object SgExtreme {
-	def horizontal(start:Boolean):SgExtreme	=
+	def start(start:Boolean):SgExtreme	=
 			if (start)	SgStart
 			else		SgEnd
 			
-	def vertical(end:Boolean):SgExtreme	=
+	def end(end:Boolean):SgExtreme	=
 			if (end)	SgEnd
 			else		SgStart
 }

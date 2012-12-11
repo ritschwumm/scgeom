@@ -6,9 +6,17 @@ object SgRectangle {
 	val zero	= SgRectangle(SgSpan.zero,	SgSpan.zero)
 	val one		= SgRectangle(SgSpan.one,	SgSpan.one)
 	
+	def fromSize(size:SgPoint):SgRectangle	= SgRectangle(
+			SgSpan fromSize size.x, 
+			SgSpan fromSize size.y)
+		
 	def fromPosSize(pos:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
 			SgSpan(pos.x, pos.x+size.x),
 			SgSpan(pos.y, pos.y+size.y))
+			
+	def fromPosOther(pos:SgPoint, other:SgPoint):SgRectangle	= SgRectangle(
+			SgSpan(pos.x, other.x),
+			SgSpan(pos.y, other.y))
 			
 	def fromCenter(center:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
 			SgSpan(center.x-size.x/2, center.x+size.x/2),
@@ -31,10 +39,10 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 	def bottom:Double	= y.end
 	def right:Double	= x.end
 	
-	def topLeft:SgPoint			= SgPoint(x.start, y.start)
-	def topRight:SgPoint		= SgPoint(x.end, y.start)
-	def bottomLeft:SgPoint		= SgPoint(x.start, y.end)
-	def bottomRight:SgPoint		= SgPoint(x.end, y.end)
+	def topLeft:SgPoint			= SgPoint(x.start,	y.start)
+	def topRight:SgPoint		= SgPoint(x.end,	y.start)
+	def bottomLeft:SgPoint		= SgPoint(x.start,	y.end)
+	def bottomRight:SgPoint		= SgPoint(x.end,	y.end)
 	
 	def center:SgPoint			= SgPoint(x.center, y.center)
 	def topCenter:SgPoint		= SgPoint(x.center, y.start)

@@ -6,6 +6,8 @@ object SgPoint {
 	val zero	= SgPoint(0,0)
 	val one		= SgPoint(1,1)
 	
+	def symmetric(value:Double)	= SgPoint(value, value)
+	
 	def fromOrientation(orientation:SgOrientation, master:Double, slave:Double):SgPoint	=
 			orientation match {
 				case SgHorizontal	=> SgPoint(master,	slave)
@@ -62,7 +64,7 @@ case class SgPoint(x:Double, y:Double) {
 		val	s	= sin(angle)
 		val	c	= cos(angle)
 		val xx	= x * c - y * s
-		val yy	= x * s+ y * c
+		val yy	= x * s + y * c
 		SgPoint(xx, yy)
 	}
 	
@@ -100,7 +102,10 @@ case class SgPoint(x:Double, y:Double) {
 				case SgVertical		=> SgPoint(x, it(y))
 			}
 			
-	def lineTo(that:SgPoint):SgLine	= SgLine(this, that)
+	def lineTo(that:SgPoint):SgLine				= SgLine(this, that)
+	def lineBy(size:SgPoint):SgLine				= SgLine		fromStartSize	(this, size)
+	def rectangleTo(that:SgPoint):SgRectangle	= SgRectangle	fromPosOther	(this, that)
+	def rectangleBy(size:SgPoint):SgRectangle	= SgRectangle	fromPosSize		(this, size)
 	
 	def toPolar	= SgPolar(length, angle)
 	
