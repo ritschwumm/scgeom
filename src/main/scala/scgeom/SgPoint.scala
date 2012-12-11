@@ -96,7 +96,7 @@ case class SgPoint(x:Double, y:Double) {
 				case SgVertical		=> SgPoint(x, it(y))
 			}
 			
-	def lineTo(that:SgPoint):SgLine			= SgLine(this, that)
+	def lineTo(that:SgPoint):SgLine	= SgLine(this, that)
 	
 	def toPolar	= SgPolar(length, angle)
 	

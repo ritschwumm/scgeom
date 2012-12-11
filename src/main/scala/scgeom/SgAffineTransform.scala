@@ -34,12 +34,6 @@ case class SgAffineTransform(delegate:AffineTransform) {
 	def apply(point:SgPoint):SgPoint	= 
 			SgPoint fromPoint2D (delegate transform (point.toPoint2D, null))
 			
-	def apply(rect:SgRectangle):SgRectangle	= {
-		val	topLeft		= this apply rect.topLeft
-		val bottomRight	= this apply rect.bottomRight
-		SgRectangle fromPosSize (topLeft, bottomRight - topLeft)
-	}
-			
 	def apply(shape:Shape):Shape	= 
 			delegate createTransformedShape shape
 			

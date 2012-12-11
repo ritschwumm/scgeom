@@ -3,7 +3,8 @@ package scgeom
 import java.awt.geom.{ Rectangle2D }
 
 object SgRectangle {
-	val zero	= SgRectangle(SgSpan.zero, SgSpan.zero)
+	val zero	= SgRectangle(SgSpan.zero,	SgSpan.zero)
+	val one		= SgRectangle(SgSpan.one,	SgSpan.one)
 	
 	def fromOrientation(orientation:SgOrientation, master:SgSpan, slave:SgSpan):SgRectangle	=
 			orientation match {
