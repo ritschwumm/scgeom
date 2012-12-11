@@ -6,14 +6,24 @@ object SgLine {
 	val zero	= SgLine(SgPoint.zero, SgPoint.zero)
 	val one		= SgLine(SgPoint.zero, SgPoint.one)
 	
-	def fromStartSize(start:SgPoint, size:SgPoint):SgLine	= SgLine(start, start+size)
-	def fromEndSize(end:SgPoint, size:SgPoint):SgLine		= SgLine(end-size, end)
+	def horizontal(x:SgSpan, y:Double):SgLine	=
+			SgLine(SgPoint(x.start, y), SgPoint(x.end, y))
+		
+	def vertical(x:Double, y:SgSpan):SgLine	=
+			SgLine(SgPoint(x, y.start), SgPoint(x, y.end))
+		
+	def fromStartSize(start:SgPoint, size:SgPoint):SgLine	= 
+			SgLine(start, start+size)
+	
+	def fromEndSize(end:SgPoint, size:SgPoint):SgLine		= 
+			SgLine(end-size, end)
 	
 	def fromExtreme(extreme:SgExtreme, master:SgPoint, slave:SgPoint):SgLine	=
 			extreme match {
 				case SgStart	=> SgLine(master, slave)
 				case SgEnd		=> SgLine(slave, master)
 			}
+			
 	def fromExtremeSize(extreme:SgExtreme, point:SgPoint, size:SgPoint):SgLine	=
 			extreme match {
 				case SgStart	=> fromStartSize(point, size)
@@ -26,16 +36,21 @@ object SgLine {
 }
 
 case class SgLine(start:SgPoint, end:SgPoint) {
+	def x:SgSpan		= SgSpan(start.x, end.x)
+	def y:SgSpan		= SgSpan(start.y, end.y)
+	
 	def size:SgPoint	= end - start
-	def spanX:SgSpan	= SgSpan(start.x, end.x)
-	def spanY:SgSpan	= SgSpan(start.y, end.y)
 	
 	def swap:SgLine		= SgLine(end, start)
 	
 	def move(offset:SgPoint):SgLine = SgLine(
-			start+offset, 
-			end+offset)
+			start	+ offset, 
+			end		+ offset)
 			
+	// TODO
+	// def intersect(that:SgLine):Option[SgPoint]
+	// def intersectInside(that:SgLine):Option[SgPoint]
+	
 	def get(extreme:SgExtreme):SgPoint	= 
 			extreme match {
 				case SgStart	=> start

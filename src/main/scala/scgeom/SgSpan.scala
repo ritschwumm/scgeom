@@ -4,14 +4,21 @@ object SgSpan {
 	val zero	= SgSpan(0,0)
 	val one		= SgSpan(0,1)
 	
-	def fromStartSize(start:Double, size:Double):SgSpan	= SgSpan(start, start+size)
-	def fromEndSize(end:Double, size:Double):SgSpan		= SgSpan(end-size, end)
+	def fromStartSize(start:Double, size:Double):SgSpan	= 
+			SgSpan(start, start+size)
+		
+	def fromEndSize(end:Double, size:Double):SgSpan		= 
+			SgSpan(end-size, end)
+		
+	def fromCenter(center:Double, size:Double):SgSpan	=
+			SgSpan(center-size/2, center+size/2)
 	
 	def fromExtreme(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
 			extreme match {
 				case SgStart	=> SgSpan(master, slave)
 				case SgEnd		=> SgSpan(slave, master)
 			}
+			
 	def fromExtremeSize(extreme:SgExtreme, point:Double, size:Double):SgSpan	=
 			extreme match {
 				case SgStart	=> fromStartSize(point, size)
@@ -55,8 +62,8 @@ case class SgSpan(start:Double, end:Double) {
 		
 	def intersects(that:SgSpan):Boolean	= {
 		val thisNormal	= this.normalize
-		val thatNormal	= this.normalize
-		thatNormal.start < thisNormal.end && thatNormal.end > thatNormal.start
+		val thatNormal	= that.normalize
+		thatNormal.start < thisNormal.end && thatNormal.end > thisNormal.start
 	}		
 		
 	def inset(insets:SgSpanInsets):SgSpan	= SgSpan(

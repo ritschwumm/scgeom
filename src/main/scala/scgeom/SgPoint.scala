@@ -8,14 +8,18 @@ object SgPoint {
 	
 	def fromOrientation(orientation:SgOrientation, master:Double, slave:Double):SgPoint	=
 			orientation match {
-				case SgHorizontal	=> SgPoint(master, slave)
-				case SgVertical		=> SgPoint(slave, master)
+				case SgHorizontal	=> SgPoint(master,	slave)
+				case SgVertical		=> SgPoint(slave,	master)
 			}
 			
-	def fromPoint2D(value:Point2D):SgPoint			= SgPoint(value.getX, value.getY)
-	def fromDimension2D(value:Dimension2D):SgPoint	= SgPoint(value.getWidth, value.getHeight)
+	def fromPair(value:Pair[Double,Double]):SgPoint	=
+			SgPoint(value._1, value._2)
 	
-	def fromPair(value:Pair[Double,Double]):SgPoint	= SgPoint(value._1, value._2)
+	def fromPoint2D(value:Point2D):SgPoint	= 
+			SgPoint(value.getX, value.getY)
+		
+	def fromDimension2D(value:Dimension2D):SgPoint	=
+			SgPoint(value.getWidth, value.getHeight)
 }
 
 case class SgPoint(x:Double, y:Double) {
@@ -24,8 +28,8 @@ case class SgPoint(x:Double, y:Double) {
 	def unary_-():SgPoint	= SgPoint(-x, -y)
 	def swap:SgPoint		= SgPoint(y,x)
 	
-	def addinv:SgPoint		= SgPoint(-x, -y)
-	def mulinv:SgPoint		= SgPoint(1/x, 1/y)
+	def addInverse:SgPoint	= SgPoint(-x, -y)
+	def mulInverse:SgPoint	= SgPoint(1/x, 1/y)
 	
 	def +(that:SgPoint):SgPoint	= SgPoint(this.x+that.x, this.y+that.y)
 	def -(that:SgPoint):SgPoint	= SgPoint(this.x-that.x, this.y-that.y)

@@ -8,7 +8,8 @@ object SgSpanInsets {
 	val zero	= symmetric(0)
 	val one		= symmetric(1)
 	
-	def symmetric(size:Double):SgSpanInsets	= SgSpanInsets(size, size)
+	def symmetric(size:Double):SgSpanInsets	=
+			SgSpanInsets(size, size)
 	
 	def fromExtreme(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
 			extreme match {
