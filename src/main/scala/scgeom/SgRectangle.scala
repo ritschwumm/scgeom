@@ -112,6 +112,39 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 			x inset insets.x,
 			y inset insets.y)
 	
+	def splitAtX(position:Double):(SgRectangle, SgRectangle)	= {
+		val (a, b)	= x splitAt position
+		(
+			SgRectangle(a, y),
+			SgRectangle(b, y)
+		)
+	}
+			
+	def splitAtY(position:Double):(SgRectangle, SgRectangle)	= {
+		val (a, b)	= y splitAt position
+		(
+			SgRectangle(x, a),
+			SgRectangle(x, b)
+		)
+	}
+			
+	def splitAtOrientation(position:Double, orientation:SgOrientation):(SgRectangle, SgRectangle)	=
+			orientation cata (
+				splitAtX(position),
+				splitAtY(position)
+			)
+			
+	def splitAt(position:SgPoint):(SgRectangle, SgRectangle, SgRectangle, SgRectangle)	= {
+		val (ax, bx)	= x splitAt position.x
+		val (ay, by)	= y splitAt position.y
+		(
+			SgRectangle(ax, ay),
+			SgRectangle(bx, ay),
+			SgRectangle(ax, by),
+			SgRectangle(bx, by)
+		)
+	}
+			
 	//------------------------------------------------------------------------------
 	//## factory dsl
 	

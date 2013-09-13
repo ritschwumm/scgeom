@@ -89,6 +89,18 @@ case class SgSpan(start:Double, end:Double) {
 			start	+ offset, 
 			end		+ offset)
 			
+	def splitAt(position:Double):(SgSpan, SgSpan)	=
+			(
+				SgSpan(start, position),
+				SgSpan(position, end)
+			)
+			
+	def splitStartBy(size:Double):(SgSpan, SgSpan)	=
+			splitAt(start + size)
+			
+	def splitEndBy(size:Double):(SgSpan, SgSpan)	=
+			splitAt(end - size)
+			
 	//------------------------------------------------------------------------------
 	//## factory dsl
 	

@@ -6,7 +6,9 @@ package object scgeom {
 		def pointWith(y:Double):SgPoint	= SgPoint(delegate, y)
 		
 		def spanTo(end:Double):SgSpan	= SgSpan(delegate, end)
-		def spanBy(size:Double):SgSpan	= SgSpan startBy (delegate, size)
+		def spanStartBy(size:Double):SgSpan		= SgSpan startBy	(delegate, size)
+		def spanEndBy(size:Double):SgSpan		= SgSpan endBy		(delegate, size)
+		def spanCenterBy(size:Double):SgSpan	= SgSpan centerBy	(delegate, size)
 		
 		def spanInsetsWith(end:Double):SgSpanInsets	= SgSpanInsets(delegate, end)
 	}
