@@ -1,11 +1,11 @@
 package scgeom
 
 object SgExtreme {
-	def start(start:Boolean):SgExtreme	=
+	def trueStart(start:Boolean):SgExtreme	=
 			if (start)	SgStart
 			else		SgEnd
 			
-	def end(end:Boolean):SgExtreme	=
+	def trueEnd(end:Boolean):SgExtreme	=
 			if (end)	SgEnd
 			else		SgStart
 }
@@ -17,10 +17,11 @@ sealed trait SgExtreme {
 				case SgEnd		=> end
 			}
 			
-	def opposite:SgExtreme	= this match {
-		case SgStart	=> SgEnd
-		case SgEnd		=> SgStart
-	}
+	def opposite:SgExtreme	=
+			this match {
+				case SgStart	=> SgEnd
+				case SgEnd		=> SgStart
+			}
 }
 
 object SgStart	extends SgExtreme

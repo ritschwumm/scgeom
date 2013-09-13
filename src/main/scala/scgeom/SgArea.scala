@@ -4,7 +4,13 @@ import java.awt.Shape
 import java.awt.geom.Area
 
 object SgArea {
-	def fromShape(shape:Shape):SgArea	= new SgArea(new Area(shape))
+	def fromAwtShape(shape:Shape):SgArea	= SgArea(new Area(shape))
+	
+	//------------------------------------------------------------------------------
+	//## awt conversion
+	
+	def fromAwtArea(it:Area):SgArea	= SgArea(it.clone.asInstanceOf[Area])
+	def toAwtArea(it:SgArea):Area	= it.toAwtArea
 }
 
 case class SgArea(delegate:Area) {
@@ -13,7 +19,13 @@ case class SgArea(delegate:Area) {
 	def ^ (that:SgArea):SgArea	= modify { _ exclusiveOr	that.delegate }
 	def & (that:SgArea):SgArea	= modify { _ intersect		that.delegate }
 	
-	def toArea:Area	= cloneDelegate
+	//------------------------------------------------------------------------------
+	//## awt conversion
+	
+	def toAwtArea:Area	= cloneDelegate
+	
+	//------------------------------------------------------------------------------
+	//## internals
 	
 	private def modify(effect:Area=>Unit):SgArea = {
 		val	out	= cloneDelegate

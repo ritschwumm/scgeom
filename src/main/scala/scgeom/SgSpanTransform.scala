@@ -18,7 +18,7 @@ case class SgSpanTransform(factor:Double, summand:Double) {
 		
 	//------------------------------------------------------------------------------
 	
-	def apply(value:Double):Double	= transform(value)
+	def apply(value:Double):Double		= transform(value)
 
 	def transform(value:Double):Double	= value * factor + summand
 	def scale(value:Double):Double		= value * factor
@@ -28,4 +28,10 @@ case class SgSpanTransform(factor:Double, summand:Double) {
 			SgSpan(
 					transform(value.start), 
 					transform(value.end))
+					
+	//------------------------------------------------------------------------------
+	//## factory dsl
+	
+	def rectangleTransformWith(y:SgSpanTransform):SgRectangleTransform	=
+			SgRectangleTransform fromSpanTransforms (this, y)
 }

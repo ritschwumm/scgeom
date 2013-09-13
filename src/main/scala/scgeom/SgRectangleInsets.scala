@@ -5,24 +5,40 @@ import java.awt.Insets
 import scala.math._
 
 object SgRectangleInsets {
+	//------------------------------------------------------------------------------
+	//## simple values
+	
 	val zero	= symmetric(SgSpanInsets.zero)
 	val one		= symmetric(SgSpanInsets.one)
 	
+	//------------------------------------------------------------------------------
+	//## component factory
+	
 	def symmetric(size:SgSpanInsets):SgRectangleInsets	= SgRectangleInsets(size, size)
 	
-	def symmetric(size:Double):SgRectangleInsets		= SgRectangleInsets(
+	def symmetric2(size:Double):SgRectangleInsets		= SgRectangleInsets(
 			SgSpanInsets symmetric size, 
 			SgSpanInsets symmetric size)
 			
-	def fromOrientation(orientation:SgOrientation, master:SgSpanInsets, slave:SgSpanInsets):SgRectangleInsets	=
+	//------------------------------------------------------------------------------
+	//## orientation factory
+	
+	def orientationWith(orientation:SgOrientation, master:SgSpanInsets, slave:SgSpanInsets):SgRectangleInsets	=
 			orientation match {
 				case SgHorizontal	=> SgRectangleInsets(master, slave)
 				case SgVertical		=> SgRectangleInsets(slave, master)
 			}
 			
-	def fromInsets(value:Insets):SgRectangleInsets	= SgRectangleInsets(
-			SgSpanInsets(value.left, value.right),
-			SgSpanInsets(value.top, value.bottom))
+	//------------------------------------------------------------------------------
+	//## awt conversion
+	
+	def fromAwtInsets(it:Insets):SgRectangleInsets	= 
+			SgRectangleInsets(
+					SgSpanInsets(it.left,	it.right),
+					SgSpanInsets(it.top,	it.bottom))
+					
+	def toAwtInsets(it:SgRectangleInsets):Insets	= 
+			it.toAwtInsets
 }
 
 case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
@@ -32,15 +48,10 @@ case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 	def right:Double	= y.end
 	
 	def empty:Boolean	= x.empty && y.empty
-	def size:SgPoint	= SgPoint(
-			x.size,
-			y.size)
+	def size:SgPoint	= SgPoint(x.size, y.size)
 		
-	def swap:SgRectangleInsets	= SgRectangleInsets(y, x)
-	
-	def inverse:SgRectangleInsets	= SgRectangleInsets(
-			x.inverse, 
-			y.inverse)
+	def swap:SgRectangleInsets		= SgRectangleInsets(y, x)
+	def inverse:SgRectangleInsets	= SgRectangleInsets(x.inverse, 	y.inverse)
 			
 	def +(that:SgRectangleInsets):SgRectangleInsets	= SgRectangleInsets(
 			this.x	+ that.x,
@@ -57,6 +68,9 @@ case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 	def /(scale:Double):SgRectangleInsets	= SgRectangleInsets(
 			x	/ scale,
 			y	/ scale)
+	
+	//------------------------------------------------------------------------------
+	//## orientation lens
 	
 	def get(orientation:SgOrientation):SgSpanInsets	= 
 			orientation match {
@@ -76,7 +90,10 @@ case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 				case SgVertical		=> SgRectangleInsets(x, it(y))
 			}
 			
-	def toInsets:Insets	= new Insets(
+	//------------------------------------------------------------------------------
+	//## awt conversion
+	
+	def toAwtInsets:Insets	= new Insets(
 			round(top).toInt,
 			round(left).toInt,
 			round(bottom).toInt,

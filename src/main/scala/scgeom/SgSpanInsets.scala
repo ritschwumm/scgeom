@@ -5,13 +5,22 @@ import java.awt.Insets
 import scala.math._
 
 object SgSpanInsets {
+	//------------------------------------------------------------------------------
+	//## simple values
+	
 	val zero	= symmetric(0)
 	val one		= symmetric(1)
+	
+	//------------------------------------------------------------------------------
+	//## component factory
 	
 	def symmetric(size:Double):SgSpanInsets	=
 			SgSpanInsets(size, size)
 	
-	def fromExtreme(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
+	//------------------------------------------------------------------------------
+	//## extreme factory
+	
+	def extremeBy(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
 			extreme match {
 				case SgStart	=> SgSpan(master, slave)
 				case SgEnd		=> SgSpan(slave, master)
@@ -20,13 +29,10 @@ object SgSpanInsets {
 
 case class SgSpanInsets(start:Double, end:Double) {
 	def empty:Boolean	= start == 0 && end == 0
+	def size:Double		= start + end
 	
-	def size:Double	= start + end
-	def inverse:SgSpanInsets	= SgSpanInsets(
-			-start,
-			-end)
-	
-	def swap:SgSpanInsets	= SgSpanInsets(end, start)
+	def inverse:SgSpanInsets	= SgSpanInsets(-start, -end)
+	def swap:SgSpanInsets		= SgSpanInsets(end, start)
 			
 	def +(that:SgSpanInsets):SgSpanInsets	= SgSpanInsets(
 			this.start	+ that.start,
@@ -44,7 +50,14 @@ case class SgSpanInsets(start:Double, end:Double) {
 			start	/ scale,
 			end		/ scale)
 			
-	def rectangleInsetsTo(that:SgSpanInsets):SgRectangleInsets	= SgRectangleInsets(this, that)
+	//------------------------------------------------------------------------------
+	//## factory dsl
+	
+	def rectangleInsetsWith(that:SgSpanInsets):SgRectangleInsets	= 
+			SgRectangleInsets(this, that)
+	
+	//------------------------------------------------------------------------------
+	//## extreme lens
 	
 	def get(extreme:SgExtreme):Double	= 
 			extreme match {

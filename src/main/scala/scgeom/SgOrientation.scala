@@ -1,11 +1,11 @@
 package scgeom
 
 object SgOrientation {
-	def horizontal(horizontal:Boolean):SgOrientation	=
+	def trueHorizontal(horizontal:Boolean):SgOrientation	=
 			if (horizontal)	SgHorizontal
 			else			SgVertical
 			
-	def vertical(vertical:Boolean):SgOrientation	=
+	def trueVertical(vertical:Boolean):SgOrientation	=
 			if (vertical)	SgVertical
 			else			SgHorizontal
 }
@@ -17,10 +17,11 @@ sealed trait SgOrientation {
 				case SgVertical		=> vertical
 			}
 			
-	def opposite:SgOrientation	= this match {
-		case SgHorizontal	=> SgVertical
-		case SgVertical		=> SgHorizontal
-	}
+	def opposite:SgOrientation	= 
+			this match {
+				case SgHorizontal	=> SgVertical
+				case SgVertical		=> SgHorizontal
+			}
 }
 
 object SgHorizontal	extends SgOrientation

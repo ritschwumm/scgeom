@@ -1,31 +1,43 @@
 package scgeom
 
 object SgSpan {
+	//------------------------------------------------------------------------------
+	//## simple values
+	
 	val zero	= SgSpan(0,0)
 	val one		= SgSpan(0,1)
 	
-	def fromSize(size:Double):SgSpan	= 
+	//------------------------------------------------------------------------------
+	//## component factory
+	
+	def startZeroBy(size:Double):SgSpan	= 
 			SgSpan(0, size)
 		
-	def fromStartSize(start:Double, size:Double):SgSpan	= 
+	def endZeroBy(size:Double):SgSpan	= 
+			SgSpan(-size, 0)
+		
+	def startBy(start:Double, size:Double):SgSpan	= 
 			SgSpan(start, start+size)
 		
-	def fromEndSize(end:Double, size:Double):SgSpan		= 
+	def endBy(end:Double, size:Double):SgSpan		= 
 			SgSpan(end-size, end)
 		
-	def fromCenter(center:Double, size:Double):SgSpan	=
+	def centerBy(center:Double, size:Double):SgSpan	=
 			SgSpan(center-size/2, center+size/2)
 	
-	def fromExtreme(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
+	//------------------------------------------------------------------------------
+	//## extreme factory
+	
+	def extremeTo(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
 			extreme match {
 				case SgStart	=> SgSpan(master, slave)
 				case SgEnd		=> SgSpan(slave, master)
 			}
 			
-	def fromExtremeSize(extreme:SgExtreme, point:Double, size:Double):SgSpan	=
+	def extremeBy(extreme:SgExtreme, point:Double, size:Double):SgSpan	=
 			extreme match {
-				case SgStart	=> fromStartSize(point, size)
-				case SgEnd		=> fromEndSize(point, size)
+				case SgStart	=> startBy(point, size)
+				case SgEnd		=> endBy(point, size)
 			}
 }
 
@@ -77,11 +89,18 @@ case class SgSpan(start:Double, end:Double) {
 			start	+ offset, 
 			end		+ offset)
 			
+	//------------------------------------------------------------------------------
+	//## factory dsl
+	
 	def lineWith(that:SgSpan):SgLine	= SgLine(
 			SgPoint(this.start, that.start), 
 			SgPoint(this.end, that.end))
+			
 	def rectangleWith(that:SgSpan):SgRectangle	=
 			SgRectangle(this, that)
+	
+	//------------------------------------------------------------------------------
+	//## extreme lens
 	
 	def get(extreme:SgExtreme):Double	= 
 			extreme match {

@@ -2,31 +2,52 @@ package scgeom
 
 import java.awt.geom.{ Point2D, Dimension2D }
 
+import scala.math._
+
 object SgPoint {
+	//------------------------------------------------------------------------------
+	//## simple values
+	
 	val zero	= SgPoint(0,0)
 	val one		= SgPoint(1,1)
 	
 	def symmetric(value:Double)	= SgPoint(value, value)
 	
-	def fromOrientation(orientation:SgOrientation, master:Double, slave:Double):SgPoint	=
+	//------------------------------------------------------------------------------
+	//## orientation factory
+	
+	def orientationWith(orientation:SgOrientation, master:Double, slave:Double):SgPoint	=
 			orientation match {
 				case SgHorizontal	=> SgPoint(master,	slave)
 				case SgVertical		=> SgPoint(slave,	master)
 			}
 			
-	def fromPair(value:Pair[Double,Double]):SgPoint	=
-			SgPoint(value._1, value._2)
+	//------------------------------------------------------------------------------
+	//## pair conversion
 	
-	def fromPoint2D(value:Point2D):SgPoint	= 
-			SgPoint(value.getX, value.getY)
+	def fromPair(it:Pair[Double,Double]):SgPoint	=
+			SgPoint(it._1, it._2)
 		
-	def fromDimension2D(value:Dimension2D):SgPoint	=
-			SgPoint(value.getWidth, value.getHeight)
+	def toPair(it:SgPoint):Pair[Double,Double]	=
+			it.toPair
+	
+	//------------------------------------------------------------------------------
+	//## awt conversion
+	
+	def fromAwtPoint2D(it:Point2D):SgPoint	= 
+			SgPoint(it.getX, it.getY)
+	
+	def toAwtPoint2D(it:SgPoint):Point2D	=
+			it.toAwtPoint2D
+		
+	def fromAwtDimension2D(it:Dimension2D):SgPoint	=
+			SgPoint(it.getWidth, it.getHeight)
+	
+	def toAwtDimension2D(it:SgPoint):Dimension2D	=
+			it.toAwtDimension2D
 }
 
 case class SgPoint(x:Double, y:Double) {
-	import scala.math._
-	
 	def unary_-():SgPoint	= SgPoint(-x, -y)
 	def swap:SgPoint		= SgPoint(y,x)
 	
@@ -84,6 +105,17 @@ case class SgPoint(x:Double, y:Double) {
 	crossG:		function()			Point(this.y, -this.x),
 	*/
 	
+	//------------------------------------------------------------------------------
+	//## factory dsl
+	
+	def lineTo(that:SgPoint):SgLine				= SgLine(this, that)
+	def lineBy(size:SgPoint):SgLine				= SgLine		startBy		(this, size)
+	def rectangleTo(that:SgPoint):SgRectangle	= SgRectangle	topLeftTo	(this, that)
+	def rectangleBy(size:SgPoint):SgRectangle	= SgRectangle	topLeftBy	(this, size)
+	
+	//------------------------------------------------------------------------------
+	//## orientation lens
+	
 	def get(orientation:SgOrientation):Double	= 
 			orientation match {
 				case SgHorizontal	=> x
@@ -102,15 +134,19 @@ case class SgPoint(x:Double, y:Double) {
 				case SgVertical		=> SgPoint(x, it(y))
 			}
 			
-	def lineTo(that:SgPoint):SgLine				= SgLine(this, that)
-	def lineBy(size:SgPoint):SgLine				= SgLine		fromStartSize	(this, size)
-	def rectangleTo(that:SgPoint):SgRectangle	= SgRectangle	fromPosOther	(this, that)
-	def rectangleBy(size:SgPoint):SgRectangle	= SgRectangle	fromPosSize		(this, size)
+	//------------------------------------------------------------------------------
+	//## internal conversion
 	
 	def toPolar	= SgPolar(length, angle)
 	
-	def toPoint2D:Point2D			= new Point2D.Double(x,y)          
-	def toDimension2D:Dimension2D	= new Dimension2D_Double(x,y)
+	//------------------------------------------------------------------------------
+	//## pair conversion
 	
 	def toPair:Pair[Double,Double]	= Pair(x,y)
+	
+	//------------------------------------------------------------------------------
+	//## awt conversion
+	
+	def toAwtPoint2D:Point2D			= new Point2D.Double(x,y)          
+	def toAwtDimension2D:Dimension2D	= new Dimension2D_Double(x,y)
 }

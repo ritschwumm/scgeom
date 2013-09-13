@@ -6,27 +6,27 @@ import java.awt.geom.{ Point2D, AffineTransform, NoninvertibleTransformException
 import scala.util.control.Exception._
 
 object SgAffineTransform {
-	val identity:SgAffineTransform					= SgAffineTransform(new AffineTransform)
-	def translate(offset:SgPoint):SgAffineTransform	= SgAffineTransform(AffineTransform getTranslateInstance	(offset.x,	offset.y))
-	def scale(factor:SgPoint):SgAffineTransform		= SgAffineTransform(AffineTransform getScaleInstance		(factor.x,	factor.y))
-	def shear(factor:SgPoint):SgAffineTransform		= SgAffineTransform(AffineTransform getShearInstance		(factor.x,	factor.y))
-	def rotate(theta:Double):SgAffineTransform		= SgAffineTransform(AffineTransform getRotateInstance		theta)
+	val identity:SgAffineTransform	= SgAffineTransform(new AffineTransform)
+	
+	def translate(offset:SgPoint):SgAffineTransform	= 
+			SgAffineTransform(AffineTransform getTranslateInstance	(offset.x,	offset.y))
+	def scale(factor:SgPoint):SgAffineTransform		= 
+			SgAffineTransform(AffineTransform getScaleInstance		(factor.x,	factor.y))
+	def shear(factor:SgPoint):SgAffineTransform		= 
+			SgAffineTransform(AffineTransform getShearInstance		(factor.x,	factor.y))
+	def rotate(theta:Double):SgAffineTransform		= 
+			SgAffineTransform(AffineTransform getRotateInstance		theta)
 	def rotateAround(theta:Double, center:SgPoint):SgAffineTransform	=
 			SgAffineTransform(AffineTransform getRotateInstance	(theta, center.x, center.y))
 	
-	// TODO test
-	def fromRectangleTransform(xy:SgRectangleTransform):SgAffineTransform	=
-			identity	translate	
-			xy.summand	scale
-			xy.factor
-			
-	// TODO test
-	def fromRectangles(from:SgRectangle, to:SgRectangle):SgAffineTransform	=
-			identity				translate
-			to.topLeft				scale
-			to.size					scale 
-			from.size.mulInverse	translate 
-			from.topLeft.addInverse
+	//------------------------------------------------------------------------------
+	// awt
+	
+	def fromAwtAffineTransform(it:AffineTransform):SgAffineTransform	=
+			SgAffineTransform(it.clone.asInstanceOf[AffineTransform])
+		
+	def toAwtAffineTransform(it:SgAffineTransform):AffineTransform	=
+			it.toAwtAffineTransform
 }
 
 case class SgAffineTransform(delegate:AffineTransform) {
@@ -35,18 +35,18 @@ case class SgAffineTransform(delegate:AffineTransform) {
 			transform(point)
 		
 	def transform(point:SgPoint):SgPoint	= 
-			SgPoint fromPoint2D (delegate transform (point.toPoint2D, null))
+			SgPoint fromAwtPoint2D (delegate transform (point.toAwtPoint2D, null))
 			
-	def transformPoint2D(point:Point2D):Point2D	= 
+	def transformAwtPoint2D(point:Point2D):Point2D	= 
 			delegate transform (point, null)
 		
-	def transformShape(shape:Shape):Shape	= 
+	def transformAwtShape(shape:Shape):Shape	= 
 			delegate createTransformedShape shape
 			
 	/** fast bounds calculation for a transformed rectangle, as long as the transform is orthogonal */
-	def bounds(rect:SgRectangle):SgRectangle	= {
+	def transformBounds(rect:SgRectangle):SgRectangle	= {
 		if (isIdentity)		return rect
-		if (!isOrthogonal)	return SgRectangle fromRectangle2D (delegate createTransformedShape rect.toRectangle2D getBounds2D)
+		if (!isOrthogonal)	return SgRectangle fromAwtRectangle2D (delegate createTransformedShape rect.toAwtRectangle2D getBounds2D)
 		
 		val coords:Array[Double]	= Array(
 				rect.x.start,
@@ -90,7 +90,7 @@ case class SgAffineTransform(delegate:AffineTransform) {
 	
 	def isIdentity:Boolean		= delegate.isIdentity
 	
-	def toAffineTransform:AffineTransform	= cloneDelegate
+	def toAwtAffineTransform:AffineTransform	= cloneDelegate
 	
 	private def modify(effect:AffineTransform=>Unit):SgAffineTransform = {
 		val	out	= cloneDelegate

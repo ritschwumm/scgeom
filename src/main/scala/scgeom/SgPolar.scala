@@ -1,13 +1,16 @@
 package scgeom
 
+import scala.math._
+
 object SgPolar {
+	//------------------------------------------------------------------------------
+	//## simple values
+	
 	val zero	= SgPolar(0,0)
 	val one		= SgPolar(1,1)
 }
 
 case class SgPolar(length:Double, angle:Double) {
-	import scala.math._
-	
 	def +(that:SgPolar):SgPolar	= (this.toKartesian + that.toKartesian).toPolar
 	def -(that:SgPolar):SgPolar	= (this.toKartesian - that.toKartesian).toPolar
 	
@@ -19,6 +22,9 @@ case class SgPolar(length:Double, angle:Double) {
 	
 	def x:Double	= length * cos(angle)
 	def y:Double	= length * sin(angle)
+	
+	//------------------------------------------------------------------------------
+	//## kartesian conversion
 	
 	def toKartesian:SgPoint	= SgPoint(x, y)
 }

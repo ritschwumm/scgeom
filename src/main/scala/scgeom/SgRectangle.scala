@@ -3,34 +3,50 @@ package scgeom
 import java.awt.geom.{ Rectangle2D }
 
 object SgRectangle {
+	//------------------------------------------------------------------------------
+	//## simple values
+	
 	val zero	= SgRectangle(SgSpan.zero,	SgSpan.zero)
 	val one		= SgRectangle(SgSpan.one,	SgSpan.one)
 	
-	def fromSize(size:SgPoint):SgRectangle	= SgRectangle(
-			SgSpan fromSize size.x, 
-			SgSpan fromSize size.y)
+	//------------------------------------------------------------------------------
+	//## component factory
+	
+	def topLeftZeroBy(size:SgPoint):SgRectangle	= SgRectangle(
+			SgSpan startZeroBy size.x, 
+			SgSpan startZeroBy size.y)
 		
-	def fromPosSize(pos:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
+	def topLeftBy(pos:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
 			SgSpan(pos.x, pos.x+size.x),
 			SgSpan(pos.y, pos.y+size.y))
 			
-	def fromPosOther(pos:SgPoint, other:SgPoint):SgRectangle	= SgRectangle(
+	def topLeftTo(pos:SgPoint, other:SgPoint):SgRectangle	= SgRectangle(
 			SgSpan(pos.x, other.x),
 			SgSpan(pos.y, other.y))
 			
-	def fromCenter(center:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
+	def centerBy(center:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
 			SgSpan(center.x-size.x/2, center.x+size.x/2),
 			SgSpan(center.y-size.y/2, center.y+size.y/2))
 			
-	def fromOrientation(orientation:SgOrientation, master:SgSpan, slave:SgSpan):SgRectangle	=
+	//------------------------------------------------------------------------------
+	//## orientation factory
+	
+	def orientationWith(orientation:SgOrientation, master:SgSpan, slave:SgSpan):SgRectangle	=
 			orientation match {
 				case SgHorizontal	=> SgRectangle(master,	slave)
 				case SgVertical		=> SgRectangle(slave,	master)
 			}
 			
-	def fromRectangle2D(value:Rectangle2D):SgRectangle		= SgRectangle(
-			SgSpan(value.getX, value.getX+value.getWidth),
-			SgSpan(value.getY, value.getY+value.getHeight))
+	//------------------------------------------------------------------------------
+	//## awt conversion
+	
+	def fromAwtRectangle2D(it:Rectangle2D):SgRectangle	= 
+			SgRectangle(
+					SgSpan(it.getX, it.getX+it.getWidth),
+					SgSpan(it.getY, it.getY+it.getHeight))
+			
+	def toAwtRectangle2D(it:SgRectangle):Rectangle2D	= 
+			it.toAwtRectangle2D
 }
 
 case class SgRectangle(x:SgSpan, y:SgSpan) {
@@ -80,10 +96,9 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 			(this.x intersects that.x) &&
 			(this.y intersects that.y)
 			
-	def containsPoint(point:SgPoint) = {
-		(x containsValue point.x)	&&
-		(y containsValue point.y)
-	}
+	def containsPoint(point:SgPoint) =
+			(x containsValue point.x)	&&
+			(y containsValue point.y)
 	
 	def contains(that:SgRectangle):Boolean	=
 			(this.x contains that.x) &&
@@ -96,6 +111,18 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 	def inset(insets:SgRectangleInsets):SgRectangle	= SgRectangle(
 			x inset insets.x,
 			y inset insets.y)
+	
+	//------------------------------------------------------------------------------
+	//## factory dsl
+	
+	def rectangleTransformTo(that:SgRectangle):SgRectangleTransform	=
+			SgRectangleTransform fromRectangles (this, that)
+		
+	def affineTransformTo(that:SgRectangle):SgAffineTransform	=
+			rectangleTransformTo(that).toAffineTransform
+			
+	//------------------------------------------------------------------------------
+	//## orientation lens
 	
 	def get(orientation:SgOrientation):SgSpan	= 
 			orientation match {
@@ -115,7 +142,10 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 				case SgVertical		=> SgRectangle(x, it(y))
 			}
 			
-	def toRectangle2D:Rectangle2D	= new Rectangle2D.Double(
+	//------------------------------------------------------------------------------
+	//## awt conversion
+	
+	def toAwtRectangle2D:Rectangle2D	= new Rectangle2D.Double(
 			x.start, y.start, 
 			x.size, y.size)
 }
