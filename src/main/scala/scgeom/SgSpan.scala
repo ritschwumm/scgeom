@@ -102,6 +102,14 @@ case class SgSpan(start:Double, end:Double) {
 			splitAt(end - size)
 			
 	//------------------------------------------------------------------------------
+	//## more span dsl
+	
+	def previous(size:Double):SgSpan	= SgSpan(start - size,	start)
+	def next(size:Double):SgSpan		= SgSpan(end,			end   + size)
+	def starting(size:Double):SgSpan	= SgSpan(start,			start + size)
+	def ending(size:Double):SgSpan		= SgSpan(end   - size,	end)
+	
+	//------------------------------------------------------------------------------
 	//## factory dsl
 	
 	def lineWith(that:SgSpan):SgLine	= SgLine(

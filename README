@@ -1,4 +1,4 @@
-An alternative to swing's geometry classes.
+An alternative to swing's geometry classes
 
 To build this code, get and install SBT from 
     https://github.com/sbt/sbt
