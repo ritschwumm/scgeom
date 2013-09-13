@@ -2,9 +2,9 @@ name			:= "scgeom"
 
 organization	:= "de.djini"
 
-version			:= "0.12.0"
+version			:= "0.13.0"
 
-scalaVersion	:= "2.10.1"
+scalaVersion	:= "2.10.2"
 
 scalacOptions	++= Seq(
 	"-deprecation",

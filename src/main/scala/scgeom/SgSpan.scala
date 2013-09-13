@@ -98,6 +98,9 @@ case class SgSpan(start:Double, end:Double) {
 			
 	def rectangleWith(that:SgSpan):SgRectangle	=
 			SgRectangle(this, that)
+		
+	def spanTransformTo(that:SgSpan):SgSpanTransform	=
+			SgSpanTransform fromSpans (this, that)
 	
 	//------------------------------------------------------------------------------
 	//## extreme lens
