@@ -3,8 +3,6 @@ package scgeom
 import java.awt.{ Shape }
 import java.awt.geom.{ Point2D, AffineTransform, NoninvertibleTransformException }
 
-import scala.util.control.Exception._
-
 object SgAffineTransform {
 	val identity:SgAffineTransform	= SgAffineTransform(new AffineTransform)
 	
@@ -60,7 +58,8 @@ case class SgAffineTransform(delegate:AffineTransform) {
 	}
 	
 	def inverse:Option[SgAffineTransform]	=
-			catching(classOf[NoninvertibleTransformException]) opt SgAffineTransform(delegate.createInverse)
+			try { Some(SgAffineTransform(delegate.createInverse)) }
+			catch { case e:NoninvertibleTransformException => None }
 	
 	/** rotate around a given center */
 	def rotateAround(theta:Double, center:SgPoint):SgAffineTransform	=

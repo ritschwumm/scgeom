@@ -2,7 +2,7 @@ name			:= "scgeom"
 
 organization	:= "de.djini"
 
-version			:= "0.16.0"
+version			:= "0.17.0"
 
 scalaVersion	:= "2.10.3"
 
