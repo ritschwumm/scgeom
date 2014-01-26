@@ -88,9 +88,11 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 			this.x union that.x,
 			this.y union that.y)
 			
-	def intersect(that:SgRectangle):SgRectangle	= SgRectangle(
-			this.x intersect that.x,
-			this.y intersect that.y)
+	def intersect(that:SgRectangle):Option[SgRectangle]	=
+			(this.x intersect that.x, this.y intersect that.y) match {
+				case (Some(x), Some(y))	=> Some(SgRectangle(x,y))
+				case _					=> None
+			}
 			
 	def intersects(that:SgRectangle):Boolean	=
 			(this.x intersects that.x) &&

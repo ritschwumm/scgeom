@@ -57,15 +57,22 @@ case class SgSpan(start:Double, end:Double) {
 			this.min min that.min, 
 			this.max max that.max)
 			
-	def intersect(that:SgSpan):SgSpan	= SgSpan(
-			this.min max that.min,
-			this.max min that.max)
-	
+	def intersect(that:SgSpan):Option[SgSpan]	=
+				 if (this.empty || that.empty)							None
+			else if (this.end	<= that.start)							None
+			else if (this.start	>= that.end)							None
+			else if (this.start	<= that.start && this.end >= that.end)	Some(that)
+			else if (this.start	>= that.start && this.end <= that.end)	Some(this)
+			else if (this.start	<= that.start && this.end <= that.end)	Some(SgSpan(that.start, this.end))
+			else														Some(SgSpan(this.start, that.end))
+			
+	// TODO should this normalize?
 	def containsValue(pos:Double) = {
 		val	normal	= normalize
 		pos >= normal.start && pos < normal.end
 	}
 	
+	// TODO should this normalize?
 	def contains(that:SgSpan):Boolean	= {
 		val thisNormal	= this.normalize
 		val thatNormal	= this.normalize
@@ -74,11 +81,17 @@ case class SgSpan(start:Double, end:Double) {
 		thatNormal.end		<=	thisNormal.end		&&
 		thatNormal.end		>	thisNormal.start
 	}
-		
+	
+	// TODO should this normalize?
 	def intersects(that:SgSpan):Boolean	= {
-		val thisNormal	= this.normalize
-		val thatNormal	= that.normalize
-		thatNormal.start < thisNormal.end && thatNormal.end > thisNormal.start
+		if (this.empty || that.empty) {
+			false
+		}
+		else {
+			val thisNormal	= this.normalize
+			val thatNormal	= that.normalize
+			thatNormal.start < thisNormal.end && thatNormal.end > thisNormal.start
+		}
 	}		
 		
 	def inset(insets:SgSpanInsets):SgSpan	= SgSpan(
