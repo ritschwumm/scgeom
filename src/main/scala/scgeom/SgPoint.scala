@@ -25,10 +25,10 @@ object SgPoint {
 	//------------------------------------------------------------------------------
 	//## pair conversion
 	
-	def fromPair(it:Pair[Double,Double]):SgPoint	=
+	def fromPair(it:(Double,Double)):SgPoint	=
 			SgPoint(it._1, it._2)
 		
-	def toPair(it:SgPoint):Pair[Double,Double]	=
+	def toPair(it:SgPoint):(Double,Double)	=
 			it.toPair
 	
 	//------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ case class SgPoint(x:Double, y:Double) {
 	//------------------------------------------------------------------------------
 	//## pair conversion
 	
-	def toPair:Pair[Double,Double]	= Pair(x,y)
+	def toPair:(Double,Double)	= (x, y)
 	
 	//------------------------------------------------------------------------------
 	//## awt conversion

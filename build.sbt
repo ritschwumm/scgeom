@@ -2,12 +2,12 @@ name			:= "scgeom"
 
 organization	:= "de.djini"
 
-version			:= "0.19.0"
+version			:= "0.20.0"
 
-scalaVersion	:= "2.10.4"
+scalaVersion	:= "2.11.0"
 
 libraryDependencies	++= Seq(
-	"org.specs2"	%%	"specs2"	% "2.3.10"	% "test"	exclude("org.scala-lang", "scala-library")
+	"org.specs2"	%%	"specs2"	% "2.3.11"	% "test"	exclude("org.scala-lang", "scala-library")
 )
 
 scalacOptions	++= Seq(
