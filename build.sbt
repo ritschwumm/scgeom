@@ -2,19 +2,9 @@ name			:= "scgeom"
 
 organization	:= "de.djini"
 
-version			:= "0.23.0"
+version			:= "0.24.0"
 
-scalaVersion	:= "2.11.3"
-
-resolvers		+= "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
-
-libraryDependencies	++= Seq(
-	"org.specs2"	%%	"specs2"	% "2.4.6"	% "test"
-)
-
-dependencyOverrides	in ThisBuild	++= Set(
-	"org.scala-lang"	% "scala-library"	% scalaVersion.value
-)
+scalaVersion	:= "2.11.2"
 
 scalacOptions	++= Seq(
 	"-deprecation",
@@ -27,4 +17,17 @@ scalacOptions	++= Seq(
 	"-language:postfixOps",
 	// "-language:experimental.macros"
 	"-feature"
+)
+
+conflictManager	:= ConflictManager.strict
+
+resolvers		+= "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
+
+libraryDependencies	++= Seq(
+	"org.specs2"	%%	"specs2"	% "2.4.6"	% "test"
+)
+
+dependencyOverrides	++= Set(
+	"org.scala-lang"	% "scala-library"	% scalaVersion.value,
+	"org.scala-lang"	% "scala-reflect"	% scalaVersion.value
 )
