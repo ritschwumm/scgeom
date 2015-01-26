@@ -2,8 +2,6 @@ package scgeom
 
 import java.awt.Insets
 
-import scala.math._
-
 object SgSpanInsets {
 	//------------------------------------------------------------------------------
 	//## simple values

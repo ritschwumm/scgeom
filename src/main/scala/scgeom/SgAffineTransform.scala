@@ -43,18 +43,20 @@ case class SgAffineTransform(delegate:AffineTransform) {
 			
 	/** fast bounds calculation for a transformed rectangle, as long as the transform is orthogonal */
 	def transformBounds(rect:SgRectangle):SgRectangle	= {
-		if (isIdentity)		return rect
-		if (!isOrthogonal)	return SgRectangle fromAwtRectangle2D (delegate createTransformedShape rect.toAwtRectangle2D getBounds2D)
-		
-		val coords:Array[Double]	= Array(
-				rect.x.start,
-				rect.y.start,
-				rect.x.end,
-				rect.y.end)
-		delegate transform (coords, 0, coords, 0, 2)
-		SgRectangle(
+			 if (isIdentity)	rect
+		else if (!isOrthogonal)	SgRectangle fromAwtRectangle2D (delegate createTransformedShape rect.toAwtRectangle2D).getBounds2D
+		else {
+			val coords:Array[Double]	= Array(
+					rect.x.start,
+					rect.y.start,
+					rect.x.end,
+					rect.y.end)
+			delegate transform (coords, 0, coords, 0, 2)
+			SgRectangle(
 				SgSpan(coords(0), coords(2)), 
-				SgSpan(coords(1), coords(3)))
+				SgSpan(coords(1), coords(3))
+			)
+		}
 	}
 	
 	def inverse:Option[SgAffineTransform]	=
