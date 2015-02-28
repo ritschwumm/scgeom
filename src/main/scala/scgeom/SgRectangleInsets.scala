@@ -17,7 +17,7 @@ object SgRectangleInsets {
 	def symmetric(size:SgSpanInsets):SgRectangleInsets	= SgRectangleInsets(size, size)
 	
 	def symmetric2(size:Double):SgRectangleInsets		= SgRectangleInsets(
-			SgSpanInsets symmetric size, 
+			SgSpanInsets symmetric size,
 			SgSpanInsets symmetric size)
 			
 	//------------------------------------------------------------------------------
@@ -32,12 +32,12 @@ object SgRectangleInsets {
 	//------------------------------------------------------------------------------
 	//## awt conversion
 	
-	def fromAwtInsets(it:Insets):SgRectangleInsets	= 
+	def fromAwtInsets(it:Insets):SgRectangleInsets	=
 			SgRectangleInsets(
 					SgSpanInsets(it.left,	it.right),
 					SgSpanInsets(it.top,	it.bottom))
 					
-	def toAwtInsets(it:SgRectangleInsets):Insets	= 
+	def toAwtInsets(it:SgRectangleInsets):Insets	=
 			it.toAwtInsets
 }
 
@@ -72,7 +72,7 @@ case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 	//------------------------------------------------------------------------------
 	//## orientation lens
 	
-	def get(orientation:SgOrientation):SgSpanInsets	= 
+	def get(orientation:SgOrientation):SgSpanInsets	=
 			orientation match {
 				case SgHorizontal	=> x
 				case SgVertical		=> y

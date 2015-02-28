@@ -6,13 +6,13 @@ import java.awt.geom.{ Point2D, AffineTransform, NoninvertibleTransformException
 object SgAffineTransform {
 	val identity:SgAffineTransform	= SgAffineTransform(new AffineTransform)
 	
-	def translate(offset:SgPoint):SgAffineTransform	= 
+	def translate(offset:SgPoint):SgAffineTransform	=
 			SgAffineTransform(AffineTransform getTranslateInstance	(offset.x,	offset.y))
-	def scale(factor:SgPoint):SgAffineTransform		= 
+	def scale(factor:SgPoint):SgAffineTransform		=
 			SgAffineTransform(AffineTransform getScaleInstance		(factor.x,	factor.y))
-	def shear(factor:SgPoint):SgAffineTransform		= 
+	def shear(factor:SgPoint):SgAffineTransform		=
 			SgAffineTransform(AffineTransform getShearInstance		(factor.x,	factor.y))
-	def rotate(theta:Double):SgAffineTransform		= 
+	def rotate(theta:Double):SgAffineTransform		=
 			SgAffineTransform(AffineTransform getRotateInstance		theta)
 	def rotateAround(theta:Double, center:SgPoint):SgAffineTransform	=
 			SgAffineTransform(AffineTransform getRotateInstance	(theta, center.x, center.y))
@@ -29,16 +29,16 @@ object SgAffineTransform {
 
 case class SgAffineTransform(delegate:AffineTransform) {
 	/** alias for transform */
-	def apply(point:SgPoint):SgPoint	= 
+	def apply(point:SgPoint):SgPoint	=
 			transform(point)
 		
-	def transform(point:SgPoint):SgPoint	= 
+	def transform(point:SgPoint):SgPoint	=
 			SgPoint fromAwtPoint2D (delegate transform (point.toAwtPoint2D, null))
 			
-	def transformAwtPoint2D(point:Point2D):Point2D	= 
+	def transformAwtPoint2D(point:Point2D):Point2D	=
 			delegate transform (point, null)
 		
-	def transformAwtShape(shape:Shape):Shape	= 
+	def transformAwtShape(shape:Shape):Shape	=
 			delegate createTransformedShape shape
 			
 	/** fast bounds calculation for a transformed rectangle, as long as the transform is orthogonal */
@@ -53,7 +53,7 @@ case class SgAffineTransform(delegate:AffineTransform) {
 					rect.y.end)
 			delegate transform (coords, 0, coords, 0, 2)
 			SgRectangle(
-				SgSpan(coords(0), coords(2)), 
+				SgSpan(coords(0), coords(2)),
 				SgSpan(coords(1), coords(3))
 			)
 		}
@@ -70,19 +70,19 @@ case class SgAffineTransform(delegate:AffineTransform) {
 	def translate(offset:SgPoint):SgAffineTransform =
 			modify { _ translate (offset.x, offset.y) }
 	
-	def scale(factor:SgPoint):SgAffineTransform = 
+	def scale(factor:SgPoint):SgAffineTransform =
 			modify { _ scale (factor.x, factor.y) }
 			
-	def shear(factor:SgPoint):SgAffineTransform = 
+	def shear(factor:SgPoint):SgAffineTransform =
 			modify { _ shear (factor.x, factor.y) }
 	
-	def rotate(theta:Double):SgAffineTransform = 
+	def rotate(theta:Double):SgAffineTransform =
 			modify { _ rotate theta }
 	
-	def andThen(that:SgAffineTransform):SgAffineTransform	= 
+	def andThen(that:SgAffineTransform):SgAffineTransform	=
 			modify { _ concatenate that.delegate }
 	
-	def compose(that:SgAffineTransform):SgAffineTransform	= 
+	def compose(that:SgAffineTransform):SgAffineTransform	=
 			that andThen this
 	
 	private val orthogonalMask	= AffineTransform.TYPE_MASK_ROTATION | AffineTransform.TYPE_GENERAL_TRANSFORM
@@ -99,6 +99,6 @@ case class SgAffineTransform(delegate:AffineTransform) {
 		SgAffineTransform(out)
 	}
 	
-	private def cloneDelegate:AffineTransform	= 
+	private def cloneDelegate:AffineTransform	=
 			delegate.clone.asInstanceOf[AffineTransform]
 }

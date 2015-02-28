@@ -34,7 +34,7 @@ object SgPoint {
 	//------------------------------------------------------------------------------
 	//## awt conversion
 	
-	def fromAwtPoint2D(it:Point2D):SgPoint	= 
+	def fromAwtPoint2D(it:Point2D):SgPoint	=
 			SgPoint(it.getX, it.getY)
 	
 	def toAwtPoint2D(it:SgPoint):Point2D	=
@@ -63,7 +63,7 @@ case class SgPoint(x:Double, y:Double) {
 	def scale(that:SgPoint):SgPoint		= SgPoint(this.x*that.x, this.y*that.y)
 	def descale(that:SgPoint):SgPoint	= SgPoint(this.x/that.x, this.y/that.y)
 	
-	def signum:SgPoint	= SgPoint(scala.math.signum(this.x), scala.math.signum(this.y)) 
+	def signum:SgPoint	= SgPoint(scala.math.signum(this.x), scala.math.signum(this.y))
 	
 	def length:Double	= sqrt(lengthQ)
 	def lengthQ:Double	= x*x + y*y
@@ -116,7 +116,7 @@ case class SgPoint(x:Double, y:Double) {
 	//------------------------------------------------------------------------------
 	//## orientation lens
 	
-	def get(orientation:SgOrientation):Double	= 
+	def get(orientation:SgOrientation):Double	=
 			orientation match {
 				case SgHorizontal	=> x
 				case SgVertical		=> y
@@ -147,6 +147,6 @@ case class SgPoint(x:Double, y:Double) {
 	//------------------------------------------------------------------------------
 	//## awt conversion
 	
-	def toAwtPoint2D:Point2D			= new Point2D.Double(x,y)          
+	def toAwtPoint2D:Point2D			= new Point2D.Double(x,y)
 	def toAwtDimension2D:Dimension2D	= new Dimension2D_Double(x,y)
 }

@@ -18,10 +18,10 @@ object SgLine {
 	def vertical(x:Double, y:SgSpan):SgLine	=
 			SgLine(SgPoint(x, y.start), SgPoint(x, y.end))
 	
-	def startBy(start:SgPoint, size:SgPoint):SgLine	= 
+	def startBy(start:SgPoint, size:SgPoint):SgLine	=
 			SgLine(start, start+size)
 	
-	def endBy(end:SgPoint, size:SgPoint):SgLine		= 
+	def endBy(end:SgPoint, size:SgPoint):SgLine		=
 			SgLine(end-size, end)
 	
 	//------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ object SgLine {
 	
 	def fromAwtLine2D(it:Line2D):SgLine	=
 			SgLine(
-					SgPoint(it.getX1, it.getY1), 
+					SgPoint(it.getX1, it.getY1),
 					SgPoint(it.getX2, it.getY2))
 			
 	def toAwtLine(it:SgLine):Line2D	=
@@ -59,7 +59,7 @@ case class SgLine(start:SgPoint, end:SgPoint) {
 	def swap:SgLine		= SgLine(end, start)
 	
 	def move(offset:SgPoint):SgLine = SgLine(
-			start	+ offset, 
+			start	+ offset,
 			end		+ offset)
 			
 	// TODO
@@ -69,7 +69,7 @@ case class SgLine(start:SgPoint, end:SgPoint) {
 	//------------------------------------------------------------------------------
 	//## extreme lens
 	
-	def get(extreme:SgExtreme):SgPoint	= 
+	def get(extreme:SgExtreme):SgPoint	=
 			extreme match {
 				case SgStart	=> start
 				case SgEnd		=> end
@@ -91,6 +91,6 @@ case class SgLine(start:SgPoint, end:SgPoint) {
 	//## awt conversion
 	
 	def toAwtLine2D:Line2D	= new Line2D.Double(
-			start.x,	start.y, 
+			start.x,	start.y,
 			end.x,		end.y)
 }

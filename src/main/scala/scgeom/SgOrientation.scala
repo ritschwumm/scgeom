@@ -17,7 +17,7 @@ sealed trait SgOrientation {
 				case SgVertical		=> vertical
 			}
 			
-	def opposite:SgOrientation	= 
+	def opposite:SgOrientation	=
 			this match {
 				case SgHorizontal	=> SgVertical
 				case SgVertical		=> SgHorizontal

@@ -33,6 +33,6 @@ case class SgArea(delegate:Area) {
 		SgArea(out)
 	}
 	
-	private def cloneDelegate:Area	= 
+	private def cloneDelegate:Area	=
 			delegate.clone.asInstanceOf[Area]
 }

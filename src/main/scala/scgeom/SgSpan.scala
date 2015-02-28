@@ -10,16 +10,16 @@ object SgSpan {
 	//------------------------------------------------------------------------------
 	//## component factory
 	
-	def startZeroBy(size:Double):SgSpan	= 
+	def startZeroBy(size:Double):SgSpan	=
 			SgSpan(0, size)
 		
-	def endZeroBy(size:Double):SgSpan	= 
+	def endZeroBy(size:Double):SgSpan	=
 			SgSpan(-size, 0)
 		
-	def startBy(start:Double, size:Double):SgSpan	= 
+	def startBy(start:Double, size:Double):SgSpan	=
 			SgSpan(start, start+size)
 		
-	def endBy(end:Double, size:Double):SgSpan		= 
+	def endBy(end:Double, size:Double):SgSpan		=
 			SgSpan(end-size, end)
 		
 	def centerBy(center:Double, size:Double):SgSpan	=
@@ -54,7 +54,7 @@ case class SgSpan(start:Double, end:Double) {
 	def normalize:SgSpan	= if (normal) this else swap
 	
 	def union(that:SgSpan):SgSpan	= SgSpan(
-			this.min min that.min, 
+			this.min min that.min,
 			this.max max that.max)
 			
 	def intersect(that:SgSpan):Option[SgSpan]	=
@@ -99,7 +99,7 @@ case class SgSpan(start:Double, end:Double) {
 			end		- insets.end)
 			
 	def move(offset:Double):SgSpan	= SgSpan(
-			start	+ offset, 
+			start	+ offset,
 			end		+ offset)
 			
 	def splitAt(position:Double):(SgSpan, SgSpan)	=
@@ -126,7 +126,7 @@ case class SgSpan(start:Double, end:Double) {
 	//## factory dsl
 	
 	def lineWith(that:SgSpan):SgLine	= SgLine(
-			SgPoint(this.start, that.start), 
+			SgPoint(this.start, that.start),
 			SgPoint(this.end, that.end))
 			
 	def rectangleWith(that:SgSpan):SgRectangle	=
@@ -138,7 +138,7 @@ case class SgSpan(start:Double, end:Double) {
 	//------------------------------------------------------------------------------
 	//## extreme lens
 	
-	def get(extreme:SgExtreme):Double	= 
+	def get(extreme:SgExtreme):Double	=
 			extreme match {
 				case SgStart	=> start
 				case SgEnd		=> end

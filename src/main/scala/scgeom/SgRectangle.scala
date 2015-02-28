@@ -13,7 +13,7 @@ object SgRectangle {
 	//## component factory
 	
 	def topLeftZeroBy(size:SgPoint):SgRectangle	= SgRectangle(
-			SgSpan startZeroBy size.x, 
+			SgSpan startZeroBy size.x,
 			SgSpan startZeroBy size.y)
 		
 	def topLeftBy(pos:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
@@ -40,12 +40,12 @@ object SgRectangle {
 	//------------------------------------------------------------------------------
 	//## awt conversion
 	
-	def fromAwtRectangle2D(it:Rectangle2D):SgRectangle	= 
+	def fromAwtRectangle2D(it:Rectangle2D):SgRectangle	=
 			SgRectangle(
 					SgSpan(it.getX, it.getX+it.getWidth),
 					SgSpan(it.getY, it.getY+it.getHeight))
 			
-	def toAwtRectangle2D(it:SgRectangle):Rectangle2D	= 
+	def toAwtRectangle2D(it:SgRectangle):Rectangle2D	=
 			it.toAwtRectangle2D
 }
 
@@ -107,7 +107,7 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 			(this.y contains that.y)
 	
 	def move(offset:SgPoint):SgRectangle	= SgRectangle(
-			x move offset.x, 
+			x move offset.x,
 			y move offset.y)
 			
 	def inset(insets:SgRectangleInsets):SgRectangle	= SgRectangle(
@@ -159,7 +159,7 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 	//------------------------------------------------------------------------------
 	//## orientation lens
 	
-	def get(orientation:SgOrientation):SgSpan	= 
+	def get(orientation:SgOrientation):SgSpan	=
 			orientation match {
 				case SgHorizontal	=> x
 				case SgVertical		=> y
@@ -181,6 +181,6 @@ case class SgRectangle(x:SgSpan, y:SgSpan) {
 	//## awt conversion
 	
 	def toAwtRectangle2D:Rectangle2D	= new Rectangle2D.Double(
-			x.start, y.start, 
+			x.start, y.start,
 			x.size, y.size)
 }

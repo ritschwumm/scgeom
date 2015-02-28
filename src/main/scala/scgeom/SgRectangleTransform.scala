@@ -10,7 +10,7 @@ object SgRectangleTransform {
 			
 	def fromSpanTransforms(x:SgSpanTransform, y:SgSpanTransform):SgRectangleTransform	=
 			SgRectangleTransform(
-					SgPoint(x.factor,y.factor), 
+					SgPoint(x.factor,y.factor),
 					SgPoint(x.summand, y.summand))
 }
 	
@@ -18,9 +18,9 @@ case class SgRectangleTransform(factor:SgPoint, summand:SgPoint) {
 	def x:SgSpanTransform	= SgSpanTransform(factor.x, summand.x)
 	def y:SgSpanTransform	= SgSpanTransform(factor.y, summand.y)
 	
-	def inverse:SgRectangleTransform	= 
+	def inverse:SgRectangleTransform	=
 			SgRectangleTransform(
-					factor.mulInverse, 
+					factor.mulInverse,
 					-(summand descale factor))
 					
 	//------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ case class SgRectangleTransform(factor:SgPoint, summand:SgPoint) {
 	
 	def transformLine(value:SgLine):SgLine	=
 			SgLine(
-					transform(value.start), 
+					transform(value.start),
 					transform(value.end))
 		
 	def transformRectangle(value:SgRectangle):SgRectangle	=

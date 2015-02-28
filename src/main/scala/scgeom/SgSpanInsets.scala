@@ -51,13 +51,13 @@ case class SgSpanInsets(start:Double, end:Double) {
 	//------------------------------------------------------------------------------
 	//## factory dsl
 	
-	def rectangleInsetsWith(that:SgSpanInsets):SgRectangleInsets	= 
+	def rectangleInsetsWith(that:SgSpanInsets):SgRectangleInsets	=
 			SgRectangleInsets(this, that)
 	
 	//------------------------------------------------------------------------------
 	//## extreme lens
 	
-	def get(extreme:SgExtreme):Double	= 
+	def get(extreme:SgExtreme):Double	=
 			extreme match {
 				case SgStart	=> start
 				case SgEnd		=> end
