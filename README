@@ -1,8 +1,8 @@
 An alternative to swing's geometry classes
 
-To build this code, get and install SBT from 
+To build this code, get and install SBT from
     https://github.com/sbt/sbt
-    
+
 Use these commands to build:
     git clone git@github.com:ritschwumm/scgeom.git
     cd scgeom
