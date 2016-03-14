@@ -41,7 +41,7 @@ object SgSpan {
 			}
 }
 
-case class SgSpan(start:Double, end:Double) {
+final case class SgSpan(start:Double, end:Double) {
 	def empty:Boolean	= start == end
 	def normal:Boolean	= start <= end
 	def size:Double		= end - start

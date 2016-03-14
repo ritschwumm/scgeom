@@ -10,7 +10,7 @@ object SgPolar {
 	val one		= SgPolar(1,1)
 }
 
-case class SgPolar(length:Double, angle:Double) {
+final case class SgPolar(length:Double, angle:Double) {
 	def +(that:SgPolar):SgPolar	= (this.toKartesian + that.toKartesian).toPolar
 	def -(that:SgPolar):SgPolar	= (this.toKartesian - that.toKartesian).toPolar
 	

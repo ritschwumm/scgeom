@@ -1,6 +1,6 @@
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.33.0"
+version			:= "0.34.0"
 
 scalaVersion	:= "2.11.8"
 scalacOptions	++= Seq(
@@ -26,4 +26,15 @@ libraryDependencies	++= Seq(
 dependencyOverrides	++= Set(
 	"org.scala-lang"	% "scala-library"	% scalaVersion.value,
 	"org.scala-lang"	% "scala-reflect"	% scalaVersion.value
+)
+
+wartremoverErrors ++= Seq(
+	Wart.Any2StringAdd,
+	Wart.EitherProjectionPartial,
+	Wart.OptionPartial,
+	Wart.Enumeration,
+	Wart.FinalCaseClass,
+	Wart.JavaConversions,
+	Wart.Option2Iterable,
+	Wart.TryPartial
 )

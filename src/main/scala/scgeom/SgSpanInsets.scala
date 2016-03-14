@@ -23,7 +23,7 @@ object SgSpanInsets {
 			}
 }
 
-case class SgSpanInsets(start:Double, end:Double) {
+final case class SgSpanInsets(start:Double, end:Double) {
 	def empty:Boolean	= start == 0 && end == 0
 	def size:Double		= start + end
 	

@@ -10,7 +10,7 @@ object SgSpanTransform {
 	}
 }
 	
-case class SgSpanTransform(factor:Double, summand:Double) {
+final case class SgSpanTransform(factor:Double, summand:Double) {
 	def inverse:SgSpanTransform	=
 			SgSpanTransform(
 					1/factor,

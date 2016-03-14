@@ -14,7 +14,7 @@ object SgRectangleTransform {
 					SgPoint(x.summand, y.summand))
 }
 	
-case class SgRectangleTransform(factor:SgPoint, summand:SgPoint) {
+final case class SgRectangleTransform(factor:SgPoint, summand:SgPoint) {
 	def x:SgSpanTransform	= SgSpanTransform(factor.x, summand.x)
 	def y:SgSpanTransform	= SgSpanTransform(factor.y, summand.y)
 	

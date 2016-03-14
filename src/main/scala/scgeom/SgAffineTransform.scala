@@ -27,7 +27,7 @@ object SgAffineTransform {
 			it.toAwtAffineTransform
 }
 
-case class SgAffineTransform(delegate:AffineTransform) {
+final case class SgAffineTransform(delegate:AffineTransform) {
 	/** alias for transform */
 	def apply(point:SgPoint):SgPoint	=
 			transform(point)

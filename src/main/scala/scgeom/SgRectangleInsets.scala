@@ -41,7 +41,7 @@ object SgRectangleInsets {
 			it.toAwtInsets
 }
 
-case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
+final case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 	def top:Double		= x.start
 	def bottom:Double	= x.end
 	def left:Double		= y.start

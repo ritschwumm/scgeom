@@ -13,7 +13,7 @@ object SgArea {
 	def toAwtArea(it:SgArea):Area	= it.toAwtArea
 }
 
-case class SgArea(delegate:Area) {
+final case class SgArea(delegate:Area) {
 	def | (that:SgArea):SgArea	= modify { _ add			that.delegate }
 	def |! (that:SgArea):SgArea	= modify { _ subtract		that.delegate }
 	def ^ (that:SgArea):SgArea	= modify { _ exclusiveOr	that.delegate }

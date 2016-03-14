@@ -51,7 +51,7 @@ object SgLine {
 			it.toAwtLine2D
 }
 
-case class SgLine(start:SgPoint, end:SgPoint) {
+final case class SgLine(start:SgPoint, end:SgPoint) {
 	def x:SgSpan		= SgSpan(start.x, end.x)
 	def y:SgSpan		= SgSpan(start.y, end.y)
 	

@@ -47,7 +47,7 @@ object SgPoint {
 			it.toAwtDimension2D
 }
 
-case class SgPoint(x:Double, y:Double) {
+final case class SgPoint(x:Double, y:Double) {
 	def unary_-():SgPoint	= SgPoint(-x, -y)
 	def swap:SgPoint		= SgPoint(y,x)
 	

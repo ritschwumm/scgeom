@@ -49,7 +49,7 @@ object SgRectangle {
 			it.toAwtRectangle2D
 }
 
-case class SgRectangle(x:SgSpan, y:SgSpan) {
+final case class SgRectangle(x:SgSpan, y:SgSpan) {
 	def top:Double		= y.start
 	def left:Double		= x.start
 	def bottom:Double	= y.end
