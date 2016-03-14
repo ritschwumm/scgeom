@@ -1,7 +1,5 @@
 package scgeom
 
-import java.awt.Insets
-
 object SgSpanInsets {
 	//------------------------------------------------------------------------------
 	//## simple values

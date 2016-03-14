@@ -1,8 +1,8 @@
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.32.0"
+version			:= "0.33.0"
 
-scalaVersion	:= "2.11.7"
+scalaVersion	:= "2.11.8"
 scalacOptions	++= Seq(
 	"-deprecation",
 	"-unchecked",
@@ -21,7 +21,7 @@ scalacOptions	++= Seq(
 conflictManager	:= ConflictManager.strict
 resolvers		+= "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 libraryDependencies	++= Seq(
-	"org.specs2"	%%	"specs2-core"	% "3.7"	% "test"
+	"org.specs2"	%%	"specs2-core"	% "3.7.2"	% "test"
 )
 dependencyOverrides	++= Set(
 	"org.scala-lang"	% "scala-library"	% scalaVersion.value,
