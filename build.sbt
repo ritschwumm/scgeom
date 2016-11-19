@@ -1,8 +1,8 @@
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.35.0"
+version			:= "0.36.0"
 
-scalaVersion	:= "2.11.8"
+scalaVersion	:= "2.12.0"
 scalacOptions	++= Seq(
 	"-deprecation",
 	"-unchecked",
@@ -15,17 +15,14 @@ scalacOptions	++= Seq(
 	// "-language:experimental.macros"
 	"-feature",
 	"-Ywarn-unused-import",
-	"-Xfatal-warnings"
+	"-Xfatal-warnings",
+	"-Xlint"
 )
 
 conflictManager	:= ConflictManager.strict
 resolvers		+= "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 libraryDependencies	++= Seq(
-	"org.specs2"	%%	"specs2-core"	% "3.8.4"	% "test"
-)
-dependencyOverrides	++= Set(
-	"org.scala-lang"	% "scala-library"	% scalaVersion.value,
-	"org.scala-lang"	% "scala-reflect"	% scalaVersion.value
+	"org.specs2"	%%	"specs2-core"	% "3.8.6"	% "test"
 )
 
 wartremoverErrors ++= Seq(
