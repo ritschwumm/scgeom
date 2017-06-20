@@ -53,9 +53,11 @@ final case class SgSpan(start:Double, end:Double) {
 	
 	def normalize:SgSpan	= if (normal) this else swap
 	
-	def union(that:SgSpan):SgSpan	= SgSpan(
-			this.min min that.min,
-			this.max max that.max)
+	def union(that:SgSpan):SgSpan	=
+			SgSpan(
+				this.min min that.min,
+				this.max max that.max
+			)
 			
 	def intersect(that:SgSpan):Option[SgSpan]	=
 				 if (this.empty || that.empty)							None
@@ -94,13 +96,17 @@ final case class SgSpan(start:Double, end:Double) {
 		}
 	}		
 		
-	def inset(insets:SgSpanInsets):SgSpan	= SgSpan(
-			start	+ insets.start,
-			end		- insets.end)
+	def inset(insets:SgSpanInsets):SgSpan	=
+			SgSpan(
+				start	+ insets.start,
+				end		- insets.end
+			)
 			
-	def move(offset:Double):SgSpan	= SgSpan(
-			start	+ offset,
-			end		+ offset)
+	def move(offset:Double):SgSpan	=
+			SgSpan(
+				start	+ offset,
+				end		+ offset
+			)
 			
 	def splitAt(position:Double):(SgSpan, SgSpan)	=
 			(
@@ -125,9 +131,11 @@ final case class SgSpan(start:Double, end:Double) {
 	//------------------------------------------------------------------------------
 	//## factory dsl
 	
-	def lineWith(that:SgSpan):SgLine	= SgLine(
-			SgPoint(this.start, that.start),
-			SgPoint(this.end, that.end))
+	def lineWith(that:SgSpan):SgLine	=
+			SgLine(
+				SgPoint(this.start, that.start),
+				SgPoint(this.end, that.end)
+			)
 			
 	def rectangleWith(that:SgSpan):SgRectangle	=
 			SgRectangle(this, that)

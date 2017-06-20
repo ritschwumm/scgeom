@@ -44,8 +44,9 @@ object SgLine {
 	
 	def fromAwtLine2D(it:Line2D):SgLine	=
 			SgLine(
-					SgPoint(it.getX1, it.getY1),
-					SgPoint(it.getX2, it.getY2))
+				SgPoint(it.getX1, it.getY1),
+				SgPoint(it.getX2, it.getY2)
+			)
 			
 	def toAwtLine(it:SgLine):Line2D	=
 			it.toAwtLine2D
@@ -58,9 +59,11 @@ final case class SgLine(start:SgPoint, end:SgPoint) {
 	def size:SgPoint	= end - start
 	def swap:SgLine		= SgLine(end, start)
 	
-	def move(offset:SgPoint):SgLine = SgLine(
-			start	+ offset,
-			end		+ offset)
+	def move(offset:SgPoint):SgLine =
+			SgLine(
+				start	+ offset,
+				end		+ offset
+			)
 			
 	// TODO
 	// def intersect(that:SgLine):Option[SgPoint]
@@ -90,7 +93,9 @@ final case class SgLine(start:SgPoint, end:SgPoint) {
 	//------------------------------------------------------------------------------
 	//## awt conversion
 	
-	def toAwtLine2D:Line2D	= new Line2D.Double(
-			start.x,	start.y,
-			end.x,		end.y)
+	def toAwtLine2D:Line2D	=
+			new Line2D.Double(
+				start.x,	start.y,
+				end.x,		end.y
+			)
 }

@@ -30,21 +30,29 @@ final case class SgSpanInsets(start:Double, end:Double) {
 	def inverse:SgSpanInsets	= SgSpanInsets(-start, -end)
 	def swap:SgSpanInsets		= SgSpanInsets(end, start)
 			
-	def +(that:SgSpanInsets):SgSpanInsets	= SgSpanInsets(
-			this.start	+ that.start,
-			this.end	+ that.end)
+	def +(that:SgSpanInsets):SgSpanInsets	=
+			SgSpanInsets(
+				this.start	+ that.start,
+				this.end	+ that.end
+			)
 	
-	def -(that:SgSpanInsets):SgSpanInsets	= SgSpanInsets(
-			this.start	- that.start,
-			this.end	- that.end)
+	def -(that:SgSpanInsets):SgSpanInsets	=
+			SgSpanInsets(
+				this.start	- that.start,
+				this.end	- that.end
+			)
 			
-	def *(scale:Double):SgSpanInsets	= SgSpanInsets(
-			start	* scale,
-			end		* scale)
+	def *(scale:Double):SgSpanInsets	=
+			SgSpanInsets(
+				start	* scale,
+				end		* scale
+			)
 			
-	def /(scale:Double):SgSpanInsets	= SgSpanInsets(
-			start	/ scale,
-			end		/ scale)
+	def /(scale:Double):SgSpanInsets	=
+			SgSpanInsets(
+				start	/ scale,
+				end		/ scale
+			)
 			
 	//------------------------------------------------------------------------------
 	//## factory dsl

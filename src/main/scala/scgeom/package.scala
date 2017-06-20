@@ -5,7 +5,7 @@ package object scgeom {
 	implicit class DoubleSgExt(delegate:Double) {
 		def pointWith(y:Double):SgPoint	= SgPoint(delegate, y)
 		
-		def spanTo(end:Double):SgSpan	= SgSpan(delegate, end)
+		def spanTo(end:Double):SgSpan			= SgSpan(delegate, end)
 		def spanStartBy(size:Double):SgSpan		= SgSpan startBy	(delegate, size)
 		def spanEndBy(size:Double):SgSpan		= SgSpan endBy		(delegate, size)
 		def spanCenterBy(size:Double):SgSpan	= SgSpan centerBy	(delegate, size)
@@ -17,8 +17,8 @@ package object scgeom {
 		def trueHorizontal:SgOrientation	= SgOrientation trueHorizontal	delegate
 		def trueVertical:SgOrientation		= SgOrientation trueVertical	delegate
 		
-		def trueStart:SgExtreme		= SgExtreme trueStart	delegate
-		def trueEnd:SgExtreme		= SgExtreme trueEnd		delegate
+		def trueStart:SgExtreme	= SgExtreme trueStart	delegate
+		def trueEnd:SgExtreme	= SgExtreme trueEnd		delegate
 	}
 	
 	//------------------------------------------------------------------------------

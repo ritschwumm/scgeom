@@ -12,21 +12,29 @@ object SgRectangle {
 	//------------------------------------------------------------------------------
 	//## component factory
 	
-	def topLeftZeroBy(size:SgPoint):SgRectangle	= SgRectangle(
-			SgSpan startZeroBy size.x,
-			SgSpan startZeroBy size.y)
+	def topLeftZeroBy(size:SgPoint):SgRectangle	=
+			SgRectangle(
+				SgSpan startZeroBy size.x,
+				SgSpan startZeroBy size.y
+			)
 		
-	def topLeftBy(pos:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
-			SgSpan(pos.x, pos.x+size.x),
-			SgSpan(pos.y, pos.y+size.y))
+	def topLeftBy(pos:SgPoint, size:SgPoint):SgRectangle	=
+			SgRectangle(
+				SgSpan(pos.x, pos.x+size.x),
+				SgSpan(pos.y, pos.y+size.y)
+			)
 			
-	def topLeftTo(pos:SgPoint, other:SgPoint):SgRectangle	= SgRectangle(
-			SgSpan(pos.x, other.x),
-			SgSpan(pos.y, other.y))
+	def topLeftTo(pos:SgPoint, other:SgPoint):SgRectangle	=
+			SgRectangle(
+				SgSpan(pos.x, other.x),
+				SgSpan(pos.y, other.y)
+			)
 			
-	def centerBy(center:SgPoint, size:SgPoint):SgRectangle	= SgRectangle(
-			SgSpan(center.x-size.x/2, center.x+size.x/2),
-			SgSpan(center.y-size.y/2, center.y+size.y/2))
+	def centerBy(center:SgPoint, size:SgPoint):SgRectangle	=
+			SgRectangle(
+				SgSpan(center.x-size.x/2, center.x+size.x/2),
+				SgSpan(center.y-size.y/2, center.y+size.y/2)
+			)
 			
 	//------------------------------------------------------------------------------
 	//## orientation factory
@@ -42,8 +50,9 @@ object SgRectangle {
 	
 	def fromAwtRectangle2D(it:Rectangle2D):SgRectangle	=
 			SgRectangle(
-					SgSpan(it.getX, it.getX+it.getWidth),
-					SgSpan(it.getY, it.getY+it.getHeight))
+				SgSpan(it.getX, it.getX+it.getWidth),
+				SgSpan(it.getY, it.getY+it.getHeight)
+			)
 			
 	def toAwtRectangle2D(it:SgRectangle):Rectangle2D	=
 			it.toAwtRectangle2D
@@ -80,13 +89,17 @@ final case class SgRectangle(x:SgSpan, y:SgSpan) {
 	
 	def swap:SgRectangle	= SgRectangle(x,y)
 	
-	def normalize:SgRectangle	= SgRectangle(
-			x.normalize,
-			y.normalize)
+	def normalize:SgRectangle	=
+			SgRectangle(
+				x.normalize,
+				y.normalize
+			)
 			
-	def union(that:SgRectangle):SgRectangle	= SgRectangle(
-			this.x union that.x,
-			this.y union that.y)
+	def union(that:SgRectangle):SgRectangle	=
+			SgRectangle(
+				this.x union that.x,
+				this.y union that.y
+			)
 			
 	def intersect(that:SgRectangle):Option[SgRectangle]	=
 			(this.x intersect that.x, this.y intersect that.y) match {
@@ -106,13 +119,17 @@ final case class SgRectangle(x:SgSpan, y:SgSpan) {
 			(this.x contains that.x) &&
 			(this.y contains that.y)
 	
-	def move(offset:SgPoint):SgRectangle	= SgRectangle(
-			x move offset.x,
-			y move offset.y)
+	def move(offset:SgPoint):SgRectangle	=
+			SgRectangle(
+				x move offset.x,
+				y move offset.y
+			)
 			
-	def inset(insets:SgRectangleInsets):SgRectangle	= SgRectangle(
-			x inset insets.x,
-			y inset insets.y)
+	def inset(insets:SgRectangleInsets):SgRectangle	=
+			SgRectangle(
+				x inset insets.x,
+				y inset insets.y
+			)
 	
 	def splitAtX(position:Double):(SgRectangle, SgRectangle)	= {
 		val (a, b)	= x splitAt position
@@ -180,7 +197,9 @@ final case class SgRectangle(x:SgSpan, y:SgSpan) {
 	//------------------------------------------------------------------------------
 	//## awt conversion
 	
-	def toAwtRectangle2D:Rectangle2D	= new Rectangle2D.Double(
-			x.start, y.start,
-			x.size, y.size)
+	def toAwtRectangle2D:Rectangle2D	=
+			new Rectangle2D.Double(
+				x.start, y.start,
+				x.size, y.size
+			)
 }

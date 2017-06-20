@@ -13,8 +13,9 @@ object SgSpanTransform {
 final case class SgSpanTransform(factor:Double, summand:Double) {
 	def inverse:SgSpanTransform	=
 			SgSpanTransform(
-					1/factor,
-					-summand/factor)
+				1			/ factor,
+				-summand	/ factor
+			)
 		
 	//------------------------------------------------------------------------------
 	
@@ -26,8 +27,9 @@ final case class SgSpanTransform(factor:Double, summand:Double) {
 	
 	def transformSpan(value:SgSpan):SgSpan	=
 			SgSpan(
-					transform(value.start),
-					transform(value.end))
+				transform(value.start),
+				transform(value.end)
+			)
 					
 	//------------------------------------------------------------------------------
 	//## factory dsl

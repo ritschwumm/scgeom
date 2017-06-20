@@ -16,9 +16,11 @@ object SgRectangleInsets {
 	
 	def symmetric(size:SgSpanInsets):SgRectangleInsets	= SgRectangleInsets(size, size)
 	
-	def symmetric2(size:Double):SgRectangleInsets		= SgRectangleInsets(
-			SgSpanInsets symmetric size,
-			SgSpanInsets symmetric size)
+	def symmetric2(size:Double):SgRectangleInsets		=
+			SgRectangleInsets(
+				SgSpanInsets symmetric size,
+				SgSpanInsets symmetric size
+			)
 			
 	//------------------------------------------------------------------------------
 	//## orientation factory
@@ -34,8 +36,9 @@ object SgRectangleInsets {
 	
 	def fromAwtInsets(it:Insets):SgRectangleInsets	=
 			SgRectangleInsets(
-					SgSpanInsets(it.left,	it.right),
-					SgSpanInsets(it.top,	it.bottom))
+				SgSpanInsets(it.left,	it.right),
+				SgSpanInsets(it.top,	it.bottom)
+			)
 					
 	def toAwtInsets(it:SgRectangleInsets):Insets	=
 			it.toAwtInsets
@@ -53,21 +56,29 @@ final case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 	def swap:SgRectangleInsets		= SgRectangleInsets(y, x)
 	def inverse:SgRectangleInsets	= SgRectangleInsets(x.inverse, 	y.inverse)
 			
-	def +(that:SgRectangleInsets):SgRectangleInsets	= SgRectangleInsets(
-			this.x	+ that.x,
-			this.y	+ that.y)
+	def +(that:SgRectangleInsets):SgRectangleInsets	=
+			SgRectangleInsets(
+				this.x	+ that.x,
+				this.y	+ that.y
+			)
 	
-	def -(that:SgRectangleInsets):SgRectangleInsets	= SgRectangleInsets(
-			this.x	- that.x,
-			this.y	- that.y)
+	def -(that:SgRectangleInsets):SgRectangleInsets	=
+			SgRectangleInsets(
+				this.x	- that.x,
+				this.y	- that.y
+			)
 			
-	def *(scale:Double):SgRectangleInsets	= SgRectangleInsets(
-			x	* scale,
-			y	* scale)
+	def *(scale:Double):SgRectangleInsets	=
+			SgRectangleInsets(
+				x	* scale,
+				y	* scale
+			)
 			
-	def /(scale:Double):SgRectangleInsets	= SgRectangleInsets(
-			x	/ scale,
-			y	/ scale)
+	def /(scale:Double):SgRectangleInsets	=
+			SgRectangleInsets(
+				x	/ scale,
+				y	/ scale
+			)
 	
 	//------------------------------------------------------------------------------
 	//## orientation lens
@@ -93,9 +104,11 @@ final case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 	//------------------------------------------------------------------------------
 	//## awt conversion
 	
-	def toAwtInsets:Insets	= new Insets(
-			round(top).toInt,
-			round(left).toInt,
-			round(bottom).toInt,
-			round(right).toInt)
+	def toAwtInsets:Insets	=
+			new Insets(
+				round(top).toInt,
+				round(left).toInt,
+				round(bottom).toInt,
+				round(right).toInt
+			)
 }

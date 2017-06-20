@@ -5,13 +5,15 @@ object SgRectangleTransform {
 	
 	def fromRectangles(from:SgRectangle, to:SgRectangle):SgRectangleTransform	=
 			fromSpanTransforms(
-					SgSpanTransform fromSpans (from.x, to.x),
-					SgSpanTransform fromSpans (from.y, to.y))
+				SgSpanTransform fromSpans (from.x, to.x),
+				SgSpanTransform fromSpans (from.y, to.y)
+			)
 			
 	def fromSpanTransforms(x:SgSpanTransform, y:SgSpanTransform):SgRectangleTransform	=
 			SgRectangleTransform(
-					SgPoint(x.factor,y.factor),
-					SgPoint(x.summand, y.summand))
+				SgPoint(x.factor,	y.factor),
+				SgPoint(x.summand,	y.summand)
+			)
 }
 	
 final case class SgRectangleTransform(factor:SgPoint, summand:SgPoint) {
@@ -20,8 +22,9 @@ final case class SgRectangleTransform(factor:SgPoint, summand:SgPoint) {
 	
 	def inverse:SgRectangleTransform	=
 			SgRectangleTransform(
-					factor.mulInverse,
-					-(summand descale factor))
+				factor.mulInverse,
+				-(summand descale factor)
+			)
 					
 	//------------------------------------------------------------------------------
 	
@@ -33,13 +36,15 @@ final case class SgRectangleTransform(factor:SgPoint, summand:SgPoint) {
 	
 	def transformLine(value:SgLine):SgLine	=
 			SgLine(
-					transform(value.start),
-					transform(value.end))
+				transform(value.start),
+				transform(value.end)
+			)
 		
 	def transformRectangle(value:SgRectangle):SgRectangle	=
 			SgRectangle(
-					x transformSpan value.x,
-					y transformSpan value.y)
+				x transformSpan value.x,
+				y transformSpan value.y
+			)
 					
 	//------------------------------------------------------------------------------
 	//## internal conversion

@@ -11,8 +11,8 @@ object SgPolar {
 }
 
 final case class SgPolar(length:Double, angle:Double) {
-	def +(that:SgPolar):SgPolar	= (this.toKartesian + that.toKartesian).toPolar
-	def -(that:SgPolar):SgPolar	= (this.toKartesian - that.toKartesian).toPolar
+	def +(that:SgPolar):SgPolar	= (this.toCartesian + that.toCartesian).toPolar
+	def -(that:SgPolar):SgPolar	= (this.toCartesian - that.toCartesian).toPolar
 	
 	def *(value:Double):SgPolar	= SgPolar(length * value, angle)
 	def /(value:Double):SgPolar	= SgPolar(length / value, angle)
@@ -26,5 +26,5 @@ final case class SgPolar(length:Double, angle:Double) {
 	//------------------------------------------------------------------------------
 	//## kartesian conversion
 	
-	def toKartesian:SgPoint	= SgPoint(x, y)
+	def toCartesian:SgPoint	= SgPoint(x, y)
 }
