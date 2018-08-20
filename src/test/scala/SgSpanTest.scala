@@ -2,7 +2,7 @@ package scgeom
 
 import org.specs2.mutable._
 
-class Test extends Specification {
+class SgSpanTest extends Specification {
 	"SgSpan" should {
 		"intersect nothing when empty" in {
 			SgSpan(1, 1) intersects SgSpan(0, 2) mustEqual false

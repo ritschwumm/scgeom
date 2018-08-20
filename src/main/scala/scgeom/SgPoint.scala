@@ -8,8 +8,8 @@ object SgPoint {
 	//------------------------------------------------------------------------------
 	//## simple values
 	
-	val zero	= SgPoint(0,0)
-	val one		= SgPoint(1,1)
+	val zero	= SgPoint(0, 0)
+	val one		= SgPoint(1, 1)
 	
 	def symmetric(value:Double)	= SgPoint(value, value)
 	

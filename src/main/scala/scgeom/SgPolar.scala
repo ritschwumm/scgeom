@@ -6,8 +6,8 @@ object SgPolar {
 	//------------------------------------------------------------------------------
 	//## simple values
 	
-	val zero	= SgPolar(0,0)
-	val one		= SgPolar(1,1)
+	val zero	= SgPolar(0, 0)
+	val one		= SgPolar(1, 1)
 }
 
 final case class SgPolar(length:Double, angle:Double) {
