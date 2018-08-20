@@ -2,27 +2,29 @@ package scgeom
 
 object SgOrientation {
 	def trueHorizontal(horizontal:Boolean):SgOrientation	=
-			if (horizontal)	SgHorizontal
-			else			SgVertical
+			if (horizontal)	SgOrientation.Horizontal
+			else			SgOrientation.Vertical
 			
 	def trueVertical(vertical:Boolean):SgOrientation	=
-			if (vertical)	SgVertical
-			else			SgHorizontal
+			if (vertical)	SgOrientation.Vertical
+			else			SgOrientation.Horizontal
+			
+	//------------------------------------------------------------------------------
+	
+	final object Horizontal	extends SgOrientation
+	final object Vertical	extends SgOrientation
 }
 
 sealed trait SgOrientation {
 	def cata[T](horizontal: =>T, vertical: =>T):T	=
 			this match {
-				case SgHorizontal	=> horizontal
-				case SgVertical		=> vertical
+				case SgOrientation.Horizontal	=> horizontal
+				case SgOrientation.Vertical		=> vertical
 			}
 			
 	def opposite:SgOrientation	=
 			this match {
-				case SgHorizontal	=> SgVertical
-				case SgVertical		=> SgHorizontal
+				case SgOrientation.Horizontal	=> SgOrientation.Vertical
+				case SgOrientation.Vertical		=> SgOrientation.Horizontal
 			}
 }
-
-object SgHorizontal	extends SgOrientation
-object SgVertical	extends SgOrientation

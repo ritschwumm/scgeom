@@ -1,6 +1,6 @@
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.40.0"
+version			:= "0.41.0"
 
 scalaVersion	:= "2.12.6"
 scalacOptions	++= Seq(

@@ -11,6 +11,9 @@ object SgPoint {
 	val zero	= SgPoint(0, 0)
 	val one		= SgPoint(1, 1)
 	
+	//------------------------------------------------------------------------------
+	//## compoment factory
+	
 	def symmetric(value:Double)	= SgPoint(value, value)
 	
 	//------------------------------------------------------------------------------
@@ -18,8 +21,8 @@ object SgPoint {
 	
 	def orientationWith(orientation:SgOrientation, master:Double, slave:Double):SgPoint	=
 			orientation match {
-				case SgHorizontal	=> SgPoint(master,	slave)
-				case SgVertical		=> SgPoint(slave,	master)
+				case SgOrientation.Horizontal	=> SgPoint(master,	slave)
+				case SgOrientation.Vertical		=> SgPoint(slave,	master)
 			}
 			
 	//------------------------------------------------------------------------------
@@ -108,7 +111,7 @@ final case class SgPoint(x:Double, y:Double) {
 	//------------------------------------------------------------------------------
 	//## factory dsl
 	
-	def lineTo(that:SgPoint):SgLine				= SgLine(this, that)
+	def lineTo(that:SgPoint):SgLine				= SgLine		startEnd	(this, that)
 	def lineBy(size:SgPoint):SgLine				= SgLine		startBy		(this, size)
 	def rectangleTo(that:SgPoint):SgRectangle	= SgRectangle	topLeftTo	(this, that)
 	def rectangleBy(size:SgPoint):SgRectangle	= SgRectangle	topLeftBy	(this, size)
@@ -118,20 +121,20 @@ final case class SgPoint(x:Double, y:Double) {
 	
 	def get(orientation:SgOrientation):Double	=
 			orientation match {
-				case SgHorizontal	=> x
-				case SgVertical		=> y
+				case SgOrientation.Horizontal	=> x
+				case SgOrientation.Vertical		=> y
 			}
 	
 	def set(orientation:SgOrientation, it:Double):SgPoint	=
 			orientation match {
-				case SgHorizontal	=> SgPoint(it, y)
-				case SgVertical		=> SgPoint(x, it)
+				case SgOrientation.Horizontal	=> SgPoint(it, y)
+				case SgOrientation.Vertical		=> SgPoint(x, it)
 			}
 	
 	def modify(orientation:SgOrientation, it:Double=>Double):SgPoint	=
 			orientation match {
-				case SgHorizontal	=> SgPoint(it(x), y)
-				case SgVertical		=> SgPoint(x, it(y))
+				case SgOrientation.Horizontal	=> SgPoint(it(x), y)
+				case SgOrientation.Vertical		=> SgPoint(x, it(y))
 			}
 			
 	//------------------------------------------------------------------------------

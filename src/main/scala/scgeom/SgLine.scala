@@ -6,61 +6,82 @@ object SgLine {
 	//------------------------------------------------------------------------------
 	//## simple values
 	
-	val zero	= SgLine(SgPoint.zero, SgPoint.zero)
-	val one		= SgLine(SgPoint.zero, SgPoint.one)
+	val zero	= startEnd(SgPoint.zero, SgPoint.zero)
+	val one		= startEnd(SgPoint.zero, SgPoint.one)
+	
+	//------------------------------------------------------------------------------
+	//## new factory
+	
+	@deprecated("use startEnd", "0.40.0")
+	def apply(start:SgPoint, end:SgPoint):SgLine	= startEnd(start, end)
 	
 	//------------------------------------------------------------------------------
 	//## component factory
 	
 	def horizontal(x:SgSpan, y:Double):SgLine	=
-			SgLine(SgPoint(x.start, y), SgPoint(x.end, y))
+			startEnd(
+				SgPoint(x.start, y),
+				SgPoint(x.end, y)
+			)
 		
 	def vertical(x:Double, y:SgSpan):SgLine	=
-			SgLine(SgPoint(x, y.start), SgPoint(x, y.end))
+			startEnd(
+				SgPoint(x, y.start),
+				SgPoint(x, y.end)
+			)
+	
+	def startEnd(start:SgPoint, end:SgPoint):SgLine	=
+			new SgLine(start, end)
 	
 	def startBy(start:SgPoint, size:SgPoint):SgLine	=
-			SgLine(start, start+size)
+			startEnd(start, start+size)
 	
 	def endBy(end:SgPoint, size:SgPoint):SgLine		=
-			SgLine(end-size, end)
+			startEnd(end-size, end)
 	
 	//------------------------------------------------------------------------------
 	//## extreme factory
 	
 	def extremeTo(extreme:SgExtreme, master:SgPoint, slave:SgPoint):SgLine	=
 			extreme match {
-				case SgStart	=> SgLine(master, slave)
-				case SgEnd		=> SgLine(slave, master)
+				case SgExtreme.Start	=> startEnd(master, slave)
+				case SgExtreme.End		=> startEnd(slave, master)
 			}
 			
 	def extremeSize(extreme:SgExtreme, point:SgPoint, size:SgPoint):SgLine	=
 			extreme match {
-				case SgStart	=> startBy(point, size)
-				case SgEnd		=> endBy(point, size)
+				case SgExtreme.Start	=> startBy(point, size)
+				case SgExtreme.End		=> endBy(point, size)
 			}
 	
 	//------------------------------------------------------------------------------
 	//## awt conversion
 	
 	def fromAwtLine2D(it:Line2D):SgLine	=
-			SgLine(
-				SgPoint(it.getX1, it.getY1),
-				SgPoint(it.getX2, it.getY2)
+			startEnd(
+				SgPoint(
+					it.getX1,
+					it.getY1
+				),
+				SgPoint(
+					it.getX2,
+					it.getY2
+				)
 			)
 			
 	def toAwtLine(it:SgLine):Line2D	=
 			it.toAwtLine2D
 }
 
-final case class SgLine(start:SgPoint, end:SgPoint) {
-	def x:SgSpan		= SgSpan(start.x, end.x)
-	def y:SgSpan		= SgSpan(start.y, end.y)
+final case class SgLine private (start:SgPoint, end:SgPoint) {
+	def x:SgSpan		= SgSpan startEnd (start.x, end.x)
+	def y:SgSpan		= SgSpan startEnd (start.y, end.y)
 	
 	def size:SgPoint	= end - start
-	def swap:SgLine		= SgLine(end, start)
+	def swap:SgLine		= SgLine startEnd (end, start)
 	
 	def move(offset:SgPoint):SgLine =
-			SgLine(
+			SgLine startEnd (
 				start	+ offset,
 				end		+ offset
 			)
@@ -74,20 +95,20 @@ final case class SgLine(start:SgPoint, end:SgPoint) {
 	
 	def get(extreme:SgExtreme):SgPoint	=
 			extreme match {
-				case SgStart	=> start
-				case SgEnd		=> end
+				case SgExtreme.Start	=> start
+				case SgExtreme.End		=> end
 			}
 	
 	def set(extreme:SgExtreme, it:SgPoint):SgLine	=
 			extreme match {
-				case SgStart	=> SgLine(it, end)
-				case SgEnd		=> SgLine(start, it)
+				case SgExtreme.Start	=> SgLine startEnd (it, end)
+				case SgExtreme.End		=> SgLine startEnd (start, it)
 			}
 	
 	def modify(extreme:SgExtreme, it:SgPoint=>SgPoint):SgLine	=
 			extreme match {
-				case SgStart	=> SgLine(it(start), end)
-				case SgEnd		=> SgLine(start, it(end))
+				case SgExtreme.Start	=> SgLine startEnd (it(start), end)
+				case SgExtreme.End		=> SgLine startEnd (start, it(end))
 			}
 	
 	//------------------------------------------------------------------------------

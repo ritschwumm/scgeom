@@ -2,27 +2,30 @@ package scgeom
 
 object SgExtreme {
 	def trueStart(start:Boolean):SgExtreme	=
-			if (start)	SgStart
-			else		SgEnd
+			if (start)	Start
+			else		End
 			
 	def trueEnd(end:Boolean):SgExtreme	=
-			if (end)	SgEnd
-			else		SgStart
+			if (end)	End
+			else		Start
+			
+	//------------------------------------------------------------------------------
+			
+	final object Start	extends SgExtreme
+	final object End	extends SgExtreme
 }
 
 sealed trait SgExtreme {
 	def cata[T](start: =>T, end: =>T):T	=
 			this match {
-				case SgStart	=> start
-				case SgEnd		=> end
+				case SgExtreme.Start	=> start
+				case SgExtreme.End	=> end
 			}
 			
 	def opposite:SgExtreme	=
 			this match {
-				case SgStart	=> SgEnd
-				case SgEnd		=> SgStart
+				case SgExtreme.Start	=> SgExtreme.End
+				case SgExtreme.End		=> SgExtreme.Start
 			}
 }
 
-object SgStart	extends SgExtreme
-object SgEnd	extends SgExtreme

@@ -12,39 +12,47 @@ object SgRectangleInsets {
 	val one		= symmetric(SgSpanInsets.one)
 	
 	//------------------------------------------------------------------------------
+	//## new factory
+	
+	@deprecated("use xy", "0.40.0")
+	def apply(x:SgSpanInsets, y:SgSpanInsets):SgRectangleInsets	= xy(x, y)
+	
+	//------------------------------------------------------------------------------
 	//## component factory
 	
-	def symmetric(size:SgSpanInsets):SgRectangleInsets	= SgRectangleInsets(size, size)
+	def symmetric(size:SgSpanInsets):SgRectangleInsets	= xy(size, size)
 	
 	def symmetric2(size:Double):SgRectangleInsets		=
-			SgRectangleInsets(
+			xy(
 				SgSpanInsets symmetric size,
 				SgSpanInsets symmetric size
 			)
 			
+	def xy(x:SgSpanInsets, y:SgSpanInsets):SgRectangleInsets	= new SgRectangleInsets(x, y)
+	
 	//------------------------------------------------------------------------------
 	//## orientation factory
 	
 	def orientationWith(orientation:SgOrientation, master:SgSpanInsets, slave:SgSpanInsets):SgRectangleInsets	=
 			orientation match {
-				case SgHorizontal	=> SgRectangleInsets(master, slave)
-				case SgVertical		=> SgRectangleInsets(slave, master)
+				case SgOrientation.Horizontal	=> xy(master, slave)
+				case SgOrientation.Vertical		=> xy(slave, master)
 			}
 			
 	//------------------------------------------------------------------------------
 	//## awt conversion
 	
 	def fromAwtInsets(it:Insets):SgRectangleInsets	=
-			SgRectangleInsets(
-				SgSpanInsets(it.left,	it.right),
-				SgSpanInsets(it.top,	it.bottom)
+			xy(
+				SgSpanInsets startEnd (it.left,	it.right),
+				SgSpanInsets startEnd (it.top,	it.bottom)
 			)
 					
 	def toAwtInsets(it:SgRectangleInsets):Insets	=
 			it.toAwtInsets
 }
 
-final case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
+final case class SgRectangleInsets private (x:SgSpanInsets, y:SgSpanInsets) {
 	def top:Double		= x.start
 	def bottom:Double	= x.end
 	def left:Double		= y.start
@@ -53,29 +61,29 @@ final case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 	def empty:Boolean	= x.empty && y.empty
 	def size:SgPoint	= SgPoint(x.size, y.size)
 		
-	def swap:SgRectangleInsets		= SgRectangleInsets(y, x)
-	def inverse:SgRectangleInsets	= SgRectangleInsets(x.inverse, 	y.inverse)
+	def swap:SgRectangleInsets		= SgRectangleInsets xy (y, x)
+	def inverse:SgRectangleInsets	= SgRectangleInsets xy (x.inverse, 	y.inverse)
 			
 	def +(that:SgRectangleInsets):SgRectangleInsets	=
-			SgRectangleInsets(
+			SgRectangleInsets xy (
 				this.x	+ that.x,
 				this.y	+ that.y
 			)
 	
 	def -(that:SgRectangleInsets):SgRectangleInsets	=
-			SgRectangleInsets(
+			SgRectangleInsets xy (
 				this.x	- that.x,
 				this.y	- that.y
 			)
 			
 	def *(scale:Double):SgRectangleInsets	=
-			SgRectangleInsets(
+			SgRectangleInsets xy (
 				x	* scale,
 				y	* scale
 			)
 			
 	def /(scale:Double):SgRectangleInsets	=
-			SgRectangleInsets(
+			SgRectangleInsets xy (
 				x	/ scale,
 				y	/ scale
 			)
@@ -85,20 +93,20 @@ final case class SgRectangleInsets(x:SgSpanInsets, y:SgSpanInsets) {
 	
 	def get(orientation:SgOrientation):SgSpanInsets	=
 			orientation match {
-				case SgHorizontal	=> x
-				case SgVertical		=> y
+				case SgOrientation.Horizontal	=> x
+				case SgOrientation.Vertical		=> y
 			}
 	
 	def set(orientation:SgOrientation, it:SgSpanInsets):SgRectangleInsets	=
 			orientation match {
-				case SgHorizontal	=> SgRectangleInsets(it, y)
-				case SgVertical		=> SgRectangleInsets(x, it)
+				case SgOrientation.Horizontal	=> SgRectangleInsets xy (it, y)
+				case SgOrientation.Vertical		=> SgRectangleInsets xy (x, it)
 			}
 	
 	def modify(orientation:SgOrientation, it:SgSpanInsets=>SgSpanInsets):SgRectangleInsets	=
 			orientation match {
-				case SgHorizontal	=> SgRectangleInsets(it(x), y)
-				case SgVertical		=> SgRectangleInsets(x, it(y))
+				case SgOrientation.Horizontal	=> SgRectangleInsets xy (it(x), y)
+				case SgOrientation.Vertical		=> SgRectangleInsets xy (x, it(y))
 			}
 			
 	//------------------------------------------------------------------------------

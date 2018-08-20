@@ -4,30 +4,41 @@ import java.awt.{ Shape }
 import java.awt.geom.{ Point2D, AffineTransform, NoninvertibleTransformException }
 
 object SgAffineTransform {
-	val identity:SgAffineTransform	= SgAffineTransform(new AffineTransform)
+	//------------------------------------------------------------------------------
+	//## new factory
+	
+	@deprecated("use unsafeFromAwtAffineTransform", "0.40.0")
+	def apply(delegate:AffineTransform):SgAffineTransform	= unsafeFromAwtAffineTransform(delegate)
+	
+	//------------------------------------------------------------------------------
+	//## factory
+	
+	val identity:SgAffineTransform	= unsafeFromAwtAffineTransform(new AffineTransform)
 	
 	def translate(offset:SgPoint):SgAffineTransform	=
-			SgAffineTransform(AffineTransform getTranslateInstance	(offset.x,	offset.y))
+			unsafeFromAwtAffineTransform(AffineTransform getTranslateInstance	(offset.x,	offset.y))
 	def scale(factor:SgPoint):SgAffineTransform		=
-			SgAffineTransform(AffineTransform getScaleInstance		(factor.x,	factor.y))
+			unsafeFromAwtAffineTransform(AffineTransform getScaleInstance		(factor.x,	factor.y))
 	def shear(factor:SgPoint):SgAffineTransform		=
-			SgAffineTransform(AffineTransform getShearInstance		(factor.x,	factor.y))
+			unsafeFromAwtAffineTransform(AffineTransform getShearInstance		(factor.x,	factor.y))
 	def rotate(theta:Double):SgAffineTransform		=
-			SgAffineTransform(AffineTransform getRotateInstance		theta)
+			unsafeFromAwtAffineTransform(AffineTransform getRotateInstance		theta)
 	def rotateAround(theta:Double, center:SgPoint):SgAffineTransform	=
-			SgAffineTransform(AffineTransform getRotateInstance	(theta, center.x, center.y))
+			unsafeFromAwtAffineTransform(AffineTransform getRotateInstance	(theta, center.x, center.y))
+	
+	def unsafeFromAwtAffineTransform(delegate:AffineTransform):SgAffineTransform	= new SgAffineTransform(delegate)
 	
 	//------------------------------------------------------------------------------
 	// awt
 	
 	def fromAwtAffineTransform(it:AffineTransform):SgAffineTransform	=
-			SgAffineTransform(it.clone.asInstanceOf[AffineTransform])
+			unsafeFromAwtAffineTransform(it.clone.asInstanceOf[AffineTransform])
 		
 	def toAwtAffineTransform(it:SgAffineTransform):AffineTransform	=
 			it.toAwtAffineTransform
 }
 
-final case class SgAffineTransform(delegate:AffineTransform) {
+final case class SgAffineTransform private (delegate:AffineTransform) {
 	/** alias for transform */
 	def apply(point:SgPoint):SgPoint	=
 			transform(point)
@@ -52,15 +63,15 @@ final case class SgAffineTransform(delegate:AffineTransform) {
 					rect.x.end,
 					rect.y.end)
 			delegate transform (coords, 0, coords, 0, 2)
-			SgRectangle(
-				SgSpan(coords(0), coords(2)),
-				SgSpan(coords(1), coords(3))
+			SgRectangle xy (
+				SgSpan startEnd (coords(0), coords(2)),
+				SgSpan startEnd (coords(1), coords(3))
 			)
 		}
 	}
 	
 	def inverse:Option[SgAffineTransform]	=
-			try { Some(SgAffineTransform(delegate.createInverse)) }
+			try { Some(SgAffineTransform.unsafeFromAwtAffineTransform(delegate.createInverse)) }
 			catch { case e:NoninvertibleTransformException => None }
 	
 	/** rotate around a given center */
@@ -96,7 +107,7 @@ final case class SgAffineTransform(delegate:AffineTransform) {
 	private def modify(effect:AffineTransform=>Unit):SgAffineTransform = {
 		val	out	= cloneDelegate
 		effect(out)
-		SgAffineTransform(out)
+		SgAffineTransform.unsafeFromAwtAffineTransform(out)
 	}
 	
 	private def cloneDelegate:AffineTransform	=

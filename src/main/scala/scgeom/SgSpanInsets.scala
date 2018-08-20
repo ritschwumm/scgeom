@@ -8,48 +8,56 @@ object SgSpanInsets {
 	val one		= symmetric(1)
 	
 	//------------------------------------------------------------------------------
+	//## new factory
+	
+	@deprecated("use startEnd", "0.40.0")
+	def apply(start:Double, end:Double):SgSpanInsets	=  startEnd(start, end)
+			
+	//------------------------------------------------------------------------------
 	//## component factory
 	
 	def symmetric(size:Double):SgSpanInsets	=
-			SgSpanInsets(size, size)
+			startEnd(size, size)
 	
+	def startEnd(start:Double, end:Double):SgSpanInsets	= new SgSpanInsets(start, end)
+		
 	//------------------------------------------------------------------------------
 	//## extreme factory
 	
 	def extremeBy(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
 			extreme match {
-				case SgStart	=> SgSpan(master, slave)
-				case SgEnd		=> SgSpan(slave, master)
+				case SgExtreme.Start	=> SgSpan startEnd (master, slave)
+				case SgExtreme.End		=> SgSpan startEnd (slave, master)
 			}
 }
 
-final case class SgSpanInsets(start:Double, end:Double) {
+final case class SgSpanInsets private (start:Double, end:Double) {
 	def empty:Boolean	= start == 0 && end == 0
 	def size:Double		= start + end
 	
-	def inverse:SgSpanInsets	= SgSpanInsets(-start, -end)
-	def swap:SgSpanInsets		= SgSpanInsets(end, start)
+	def inverse:SgSpanInsets	= SgSpanInsets startEnd (-start, -end)
+	def swap:SgSpanInsets		= SgSpanInsets startEnd (end, start)
 			
 	def +(that:SgSpanInsets):SgSpanInsets	=
-			SgSpanInsets(
+			SgSpanInsets startEnd (
 				this.start	+ that.start,
 				this.end	+ that.end
 			)
 	
 	def -(that:SgSpanInsets):SgSpanInsets	=
-			SgSpanInsets(
+			SgSpanInsets startEnd (
 				this.start	- that.start,
 				this.end	- that.end
 			)
 			
 	def *(scale:Double):SgSpanInsets	=
-			SgSpanInsets(
+			SgSpanInsets startEnd (
 				start	* scale,
 				end		* scale
 			)
 			
 	def /(scale:Double):SgSpanInsets	=
-			SgSpanInsets(
+			SgSpanInsets startEnd (
 				start	/ scale,
 				end		/ scale
 			)
@@ -58,26 +66,26 @@ final case class SgSpanInsets(start:Double, end:Double) {
 	//## factory dsl
 	
 	def rectangleInsetsWith(that:SgSpanInsets):SgRectangleInsets	=
-			SgRectangleInsets(this, that)
+			SgRectangleInsets xy (this, that)
 	
 	//------------------------------------------------------------------------------
 	//## extreme lens
 	
 	def get(extreme:SgExtreme):Double	=
 			extreme match {
-				case SgStart	=> start
-				case SgEnd		=> end
+				case SgExtreme.Start	=> start
+				case SgExtreme.End		=> end
 			}
 	
 	def set(extreme:SgExtreme, it:Double):SgSpanInsets	=
 			extreme match {
-				case SgStart	=> SgSpanInsets(it, end)
-				case SgEnd		=> SgSpanInsets(start, it)
+				case SgExtreme.Start	=> SgSpanInsets startEnd (it, end)
+				case SgExtreme.End		=> SgSpanInsets startEnd (start, it)
 			}
 	
 	def modify(extreme:SgExtreme, it:Double=>Double):SgSpanInsets	=
 			extreme match {
-				case SgStart	=> SgSpanInsets(it(start), end)
-				case SgEnd		=> SgSpanInsets(start, it(end))
+				case SgExtreme.Start	=> SgSpanInsets startEnd (it(start), end)
+				case SgExtreme.End		=> SgSpanInsets startEnd (start, it(end))
 			}
 }

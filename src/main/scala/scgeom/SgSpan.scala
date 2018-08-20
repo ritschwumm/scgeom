@@ -4,44 +4,53 @@ object SgSpan {
 	//------------------------------------------------------------------------------
 	//## simple values
 	
-	val zero	= SgSpan(0, 0)
-	val one		= SgSpan(0, 1)
+	val zero	= startEnd(0, 0)
+	val one		= startEnd(0, 1)
+	
+	//------------------------------------------------------------------------------
+	//## new factory
+	
+	@deprecated("use startEnd", "0.40.0")
+	def apply(start:Double, end:Double):SgSpan	= startEnd(start, end)
 	
 	//------------------------------------------------------------------------------
 	//## component factory
 	
 	def startZeroBy(size:Double):SgSpan	=
-			SgSpan(0, size)
+			startEnd(0, size)
 		
 	def endZeroBy(size:Double):SgSpan	=
-			SgSpan(-size, 0)
+			startEnd(-size, 0)
+		
+	def startEnd(start:Double, end:Double):SgSpan	=
+			new SgSpan(start, end)
 		
 	def startBy(start:Double, size:Double):SgSpan	=
-			SgSpan(start, start+size)
+			startEnd(start, start+size)
 		
 	def endBy(end:Double, size:Double):SgSpan		=
-			SgSpan(end-size, end)
+			startEnd(end-size, end)
 		
 	def centerBy(center:Double, size:Double):SgSpan	=
-			SgSpan(center-size/2, center+size/2)
+			startEnd(center-size/2, center+size/2)
 	
 	//------------------------------------------------------------------------------
 	//## extreme factory
 	
 	def extremeTo(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
 			extreme match {
-				case SgStart	=> SgSpan(master, slave)
-				case SgEnd		=> SgSpan(slave, master)
+				case SgExtreme.Start	=> startEnd(master, slave)
+				case SgExtreme.End		=> startEnd(slave, master)
 			}
 			
 	def extremeBy(extreme:SgExtreme, point:Double, size:Double):SgSpan	=
 			extreme match {
-				case SgStart	=> startBy(point, size)
-				case SgEnd		=> endBy(point, size)
+				case SgExtreme.Start	=> startBy(point, size)
+				case SgExtreme.End		=> endBy(point, size)
 			}
 }
 
-final case class SgSpan(start:Double, end:Double) {
+final case class SgSpan private (start:Double, end:Double) {
 	def empty:Boolean	= start == end
 	def normal:Boolean	= start <= end
 	def size:Double		= end - start
@@ -49,12 +58,12 @@ final case class SgSpan(start:Double, end:Double) {
 	def max:Double		= start max end
 	def center:Double	= (start + end) / 2
 	
-	def swap:SgSpan	= SgSpan(end, start)
+	def swap:SgSpan	= SgSpan startEnd (end, start)
 	
 	def normalize:SgSpan	= if (normal) this else swap
 	
 	def union(that:SgSpan):SgSpan	=
-			SgSpan(
+			SgSpan startEnd (
 				this.min min that.min,
 				this.max max that.max
 			)
@@ -65,8 +74,8 @@ final case class SgSpan(start:Double, end:Double) {
 			else if (this.start	>= that.end)							None
 			else if (this.start	<= that.start && this.end >= that.end)	Some(that)
 			else if (this.start	>= that.start && this.end <= that.end)	Some(this)
-			else if (this.start	<= that.start && this.end <= that.end)	Some(SgSpan(that.start, this.end))
-			else														Some(SgSpan(this.start, that.end))
+			else if (this.start	<= that.start && this.end <= that.end)	Some(SgSpan startEnd (that.start, this.end))
+			else														Some(SgSpan startEnd (this.start, that.end))
 			
 	// TODO should this normalize?
 	def containsValue(pos:Double) = {
@@ -97,21 +106,21 @@ final case class SgSpan(start:Double, end:Double) {
 	}		
 		
 	def inset(insets:SgSpanInsets):SgSpan	=
-			SgSpan(
+			SgSpan startEnd (
 				start	+ insets.start,
 				end		- insets.end
 			)
 			
 	def move(offset:Double):SgSpan	=
-			SgSpan(
+			SgSpan startEnd (
 				start	+ offset,
 				end		+ offset
 			)
 			
 	def splitAt(position:Double):(SgSpan, SgSpan)	=
 			(
-				SgSpan(start, position),
-				SgSpan(position, end)
+				SgSpan startEnd (start, position),
+				SgSpan startEnd (position, end)
 			)
 			
 	def splitStartBy(size:Double):(SgSpan, SgSpan)	=
@@ -123,44 +132,44 @@ final case class SgSpan(start:Double, end:Double) {
 	//------------------------------------------------------------------------------
 	//## more span dsl
 	
-	def previous(size:Double):SgSpan	= SgSpan(start - size,	start)
-	def next(size:Double):SgSpan		= SgSpan(end,			end   + size)
-	def starting(size:Double):SgSpan	= SgSpan(start,			start + size)
-	def ending(size:Double):SgSpan		= SgSpan(end   - size,	end)
+	def previous(size:Double):SgSpan	= SgSpan startEnd (start - size,	start)
+	def next(size:Double):SgSpan		= SgSpan startEnd (end,			end   + size)
+	def starting(size:Double):SgSpan	= SgSpan startEnd (start,			start + size)
+	def ending(size:Double):SgSpan		= SgSpan startEnd (end   - size,	end)
 	
 	//------------------------------------------------------------------------------
 	//## factory dsl
 	
 	def lineWith(that:SgSpan):SgLine	=
-			SgLine(
+			SgLine startEnd (
 				SgPoint(this.start, that.start),
 				SgPoint(this.end, that.end)
 			)
 			
 	def rectangleWith(that:SgSpan):SgRectangle	=
-			SgRectangle(this, that)
+			SgRectangle xy (this, that)
 		
 	def spanTransformTo(that:SgSpan):SgSpanTransform	=
-			SgSpanTransform fromSpans (this, that)
+			SgSpanTransform fromTo (this, that)
 	
 	//------------------------------------------------------------------------------
 	//## extreme lens
 	
 	def get(extreme:SgExtreme):Double	=
 			extreme match {
-				case SgStart	=> start
-				case SgEnd		=> end
+				case SgExtreme.Start	=> start
+				case SgExtreme.End		=> end
 			}
 	
 	def set(extreme:SgExtreme, it:Double):SgSpan	=
 			extreme match {
-				case SgStart	=> SgSpan(it, end)
-				case SgEnd		=> SgSpan(start, it)
+				case SgExtreme.Start	=> SgSpan startEnd (it, end)
+				case SgExtreme.End		=> SgSpan startEnd (start, it)
 			}
 	
 	def modify(extreme:SgExtreme, it:Double=>Double):SgSpan	=
 			extreme match {
-				case SgStart	=> SgSpan(it(start), end)
-				case SgEnd		=> SgSpan(start, it(end))
+				case SgExtreme.Start	=> SgSpan startEnd (it(start), end)
+				case SgExtreme.End		=> SgSpan startEnd (start, it(end))
 			}
 }
