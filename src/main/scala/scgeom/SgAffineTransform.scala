@@ -57,11 +57,13 @@ final case class SgAffineTransform private (delegate:AffineTransform) {
 			 if (isIdentity)	rect
 		else if (!isOrthogonal)	SgRectangle fromAwtRectangle2D (delegate createTransformedShape rect.toAwtRectangle2D).getBounds2D
 		else {
-			val coords:Array[Double]	= Array(
-					rect.x.start,
-					rect.y.start,
-					rect.x.end,
-					rect.y.end)
+			val coords:Array[Double]	=
+					Array(
+						rect.x.start,
+						rect.y.start,
+						rect.x.end,
+						rect.y.end
+					)
 			delegate transform (coords, 0, coords, 0, 2)
 			SgRectangle xy (
 				SgSpan startEnd (coords(0), coords(2)),
