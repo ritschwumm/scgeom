@@ -6,15 +6,15 @@ import java.awt.geom.{ Point2D, AffineTransform, NoninvertibleTransformException
 object SgAffineTransform {
 	//------------------------------------------------------------------------------
 	//## new factory
-	
+
 	@deprecated("use unsafeFromAwtAffineTransform", "0.40.0")
 	def apply(delegate:AffineTransform):SgAffineTransform	= unsafeFromAwtAffineTransform(delegate)
-	
+
 	//------------------------------------------------------------------------------
 	//## factory
-	
+
 	val identity:SgAffineTransform	= unsafeFromAwtAffineTransform(new AffineTransform)
-	
+
 	def translate(offset:SgPoint):SgAffineTransform	=
 			unsafeFromAwtAffineTransform(AffineTransform getTranslateInstance	(offset.x,	offset.y))
 	def scale(factor:SgPoint):SgAffineTransform		=
@@ -25,15 +25,15 @@ object SgAffineTransform {
 			unsafeFromAwtAffineTransform(AffineTransform getRotateInstance		theta)
 	def rotateAround(theta:Double, center:SgPoint):SgAffineTransform	=
 			unsafeFromAwtAffineTransform(AffineTransform getRotateInstance	(theta, center.x, center.y))
-	
+
 	def unsafeFromAwtAffineTransform(delegate:AffineTransform):SgAffineTransform	= new SgAffineTransform(delegate)
-	
+
 	//------------------------------------------------------------------------------
 	// awt
-	
+
 	def fromAwtAffineTransform(it:AffineTransform):SgAffineTransform	=
 			unsafeFromAwtAffineTransform(it.clone.asInstanceOf[AffineTransform])
-		
+
 	def toAwtAffineTransform(it:SgAffineTransform):AffineTransform	=
 			it.toAwtAffineTransform
 }
@@ -42,16 +42,16 @@ final case class SgAffineTransform private (delegate:AffineTransform) {
 	/** alias for transform */
 	def apply(point:SgPoint):SgPoint	=
 			transform(point)
-		
+
 	def transform(point:SgPoint):SgPoint	=
 			SgPoint fromAwtPoint2D (delegate transform (point.toAwtPoint2D, null))
-			
+
 	def transformAwtPoint2D(point:Point2D):Point2D	=
 			delegate transform (point, null)
-		
+
 	def transformAwtShape(shape:Shape):Shape	=
 			delegate createTransformedShape shape
-			
+
 	/** fast bounds calculation for a transformed rectangle, as long as the transform is orthogonal */
 	def transformBounds(rect:SgRectangle):SgRectangle	= {
 			 if (isIdentity)	rect
@@ -71,47 +71,47 @@ final case class SgAffineTransform private (delegate:AffineTransform) {
 			)
 		}
 	}
-	
+
 	def inverse:Option[SgAffineTransform]	=
 			try { Some(SgAffineTransform.unsafeFromAwtAffineTransform(delegate.createInverse)) }
 			catch { case e:NoninvertibleTransformException => None }
-	
+
 	/** rotate around a given center */
 	def rotateAround(theta:Double, center:SgPoint):SgAffineTransform	=
 			modify { _ rotate (theta, center.x, center.y) }
-	
+
 	def translate(offset:SgPoint):SgAffineTransform =
 			modify { _ translate (offset.x, offset.y) }
-	
+
 	def scale(factor:SgPoint):SgAffineTransform =
 			modify { _ scale (factor.x, factor.y) }
-			
+
 	def shear(factor:SgPoint):SgAffineTransform =
 			modify { _ shear (factor.x, factor.y) }
-	
+
 	def rotate(theta:Double):SgAffineTransform =
 			modify { _ rotate theta }
-	
+
 	def andThen(that:SgAffineTransform):SgAffineTransform	=
 			modify { _ concatenate that.delegate }
-	
+
 	def compose(that:SgAffineTransform):SgAffineTransform	=
 			that andThen this
-	
+
 	private val orthogonalMask	= AffineTransform.TYPE_MASK_ROTATION | AffineTransform.TYPE_GENERAL_TRANSFORM
 
 	def isOrthogonal:Boolean	= (delegate.getType & orthogonalMask) == 0
-	
+
 	def isIdentity:Boolean		= delegate.isIdentity
-	
+
 	def toAwtAffineTransform:AffineTransform	= cloneDelegate
-	
+
 	private def modify(effect:AffineTransform=>Unit):SgAffineTransform = {
 		val	out	= cloneDelegate
 		effect(out)
 		SgAffineTransform.unsafeFromAwtAffineTransform(out)
 	}
-	
+
 	private def cloneDelegate:AffineTransform	=
 			delegate.clone.asInstanceOf[AffineTransform]
 }

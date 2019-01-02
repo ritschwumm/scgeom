@@ -4,13 +4,13 @@ object SgOrientation {
 	def trueHorizontal(horizontal:Boolean):SgOrientation	=
 			if (horizontal)	SgOrientation.Horizontal
 			else			SgOrientation.Vertical
-			
+
 	def trueVertical(vertical:Boolean):SgOrientation	=
 			if (vertical)	SgOrientation.Vertical
 			else			SgOrientation.Horizontal
-			
+
 	//------------------------------------------------------------------------------
-	
+
 	final object Horizontal	extends SgOrientation
 	final object Vertical	extends SgOrientation
 }
@@ -21,7 +21,7 @@ sealed trait SgOrientation {
 				case SgOrientation.Horizontal	=> horizontal
 				case SgOrientation.Vertical		=> vertical
 			}
-			
+
 	def opposite:SgOrientation	=
 			this match {
 				case SgOrientation.Horizontal	=> SgOrientation.Vertical
