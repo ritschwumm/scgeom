@@ -15,6 +15,7 @@ object SgArea {
 
 	def fromAwtShape(shape:Shape):SgArea	= unsafeFromAwtArea(new Area(shape))
 
+	@SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
 	def fromAwtArea(it:Area):SgArea	= unsafeFromAwtArea(it.clone.asInstanceOf[Area])
 	def toAwtArea(it:SgArea):Area	= it.toAwtArea
 
@@ -41,6 +42,7 @@ final case class SgArea private (delegate:Area) {
 		SgArea unsafeFromAwtArea out
 	}
 
+	@SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
 	private def cloneDelegate:Area	=
 			delegate.clone.asInstanceOf[Area]
 }

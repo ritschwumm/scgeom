@@ -31,6 +31,7 @@ object SgAffineTransform {
 	//------------------------------------------------------------------------------
 	// awt
 
+	@SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
 	def fromAwtAffineTransform(it:AffineTransform):SgAffineTransform	=
 			unsafeFromAwtAffineTransform(it.clone.asInstanceOf[AffineTransform])
 
@@ -112,6 +113,7 @@ final case class SgAffineTransform private (delegate:AffineTransform) {
 		SgAffineTransform.unsafeFromAwtAffineTransform(out)
 	}
 
+	@SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
 	private def cloneDelegate:AffineTransform	=
 			delegate.clone.asInstanceOf[AffineTransform]
 }
