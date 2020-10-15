@@ -9,12 +9,12 @@ trait extensions {
 	implicit class DoubleSgExt(delegate:Double) {
 		def pointWith(y:Double):SgPoint	= SgPoint(delegate, y)
 
-		def spanTo(end:Double):SgSpan			= SgSpan startEnd	(delegate, end)
-		def spanStartBy(size:Double):SgSpan		= SgSpan startBy	(delegate, size)
-		def spanEndBy(size:Double):SgSpan		= SgSpan endBy		(delegate, size)
-		def spanCenterBy(size:Double):SgSpan	= SgSpan centerBy	(delegate, size)
+		def spanTo(end:Double):SgSpan			= SgSpan .startEnd	(delegate, end)
+		def spanStartBy(size:Double):SgSpan		= SgSpan .startBy	(delegate, size)
+		def spanEndBy(size:Double):SgSpan		= SgSpan .endBy		(delegate, size)
+		def spanCenterBy(size:Double):SgSpan	= SgSpan .centerBy	(delegate, size)
 
-		def spanInsetsWith(end:Double):SgSpanInsets	= SgSpanInsets startEnd (delegate, end)
+		def spanInsetsWith(end:Double):SgSpanInsets	= SgSpanInsets.startEnd(delegate, end)
 	}
 
 	/*

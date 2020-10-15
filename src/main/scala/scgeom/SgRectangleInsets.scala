@@ -23,10 +23,10 @@ object SgRectangleInsets {
 	def symmetric(size:SgSpanInsets):SgRectangleInsets	= xy(size, size)
 
 	def symmetric2(size:Double):SgRectangleInsets		=
-			xy(
-				SgSpanInsets symmetric size,
-				SgSpanInsets symmetric size
-			)
+		xy(
+			SgSpanInsets symmetric size,
+			SgSpanInsets symmetric size
+		)
 
 	def xy(x:SgSpanInsets, y:SgSpanInsets):SgRectangleInsets	= new SgRectangleInsets(x, y)
 
@@ -34,22 +34,22 @@ object SgRectangleInsets {
 	//## orientation factory
 
 	def orientationWith(orientation:SgOrientation, master:SgSpanInsets, slave:SgSpanInsets):SgRectangleInsets	=
-			orientation match {
-				case SgOrientation.Horizontal	=> xy(master, slave)
-				case SgOrientation.Vertical		=> xy(slave, master)
-			}
+		orientation match {
+			case SgOrientation.Horizontal	=> xy(master, slave)
+			case SgOrientation.Vertical		=> xy(slave, master)
+		}
 
 	//------------------------------------------------------------------------------
 	//## awt conversion
 
 	def fromAwtInsets(it:Insets):SgRectangleInsets	=
-			xy(
-				SgSpanInsets startEnd (it.left,	it.right),
-				SgSpanInsets startEnd (it.top,	it.bottom)
-			)
+		xy(
+			SgSpanInsets.startEnd(it.left,	it.right),
+			SgSpanInsets.startEnd(it.top,	it.bottom)
+		)
 
 	def toAwtInsets(it:SgRectangleInsets):Insets	=
-			it.toAwtInsets
+		it.toAwtInsets
 }
 
 final case class SgRectangleInsets private (x:SgSpanInsets, y:SgSpanInsets) {
@@ -61,62 +61,62 @@ final case class SgRectangleInsets private (x:SgSpanInsets, y:SgSpanInsets) {
 	def empty:Boolean	= x.empty && y.empty
 	def size:SgPoint	= SgPoint(x.size, y.size)
 
-	def swap:SgRectangleInsets		= SgRectangleInsets xy (y, x)
-	def inverse:SgRectangleInsets	= SgRectangleInsets xy (x.inverse, 	y.inverse)
+	def swap:SgRectangleInsets		= SgRectangleInsets.xy(y, x)
+	def inverse:SgRectangleInsets	= SgRectangleInsets.xy(x.inverse, 	y.inverse)
 
 	def +(that:SgRectangleInsets):SgRectangleInsets	=
-			SgRectangleInsets xy (
-				this.x	+ that.x,
-				this.y	+ that.y
-			)
+		SgRectangleInsets.xy(
+			this.x	+ that.x,
+			this.y	+ that.y
+		)
 
 	def -(that:SgRectangleInsets):SgRectangleInsets	=
-			SgRectangleInsets xy (
-				this.x	- that.x,
-				this.y	- that.y
-			)
+		SgRectangleInsets.xy(
+			this.x	- that.x,
+			this.y	- that.y
+		)
 
 	def *(scale:Double):SgRectangleInsets	=
-			SgRectangleInsets xy (
-				x	* scale,
-				y	* scale
-			)
+		SgRectangleInsets.xy(
+			x	* scale,
+			y	* scale
+		)
 
 	def /(scale:Double):SgRectangleInsets	=
-			SgRectangleInsets xy (
-				x	/ scale,
-				y	/ scale
-			)
+		SgRectangleInsets.xy(
+			x	/ scale,
+			y	/ scale
+		)
 
 	//------------------------------------------------------------------------------
 	//## orientation lens
 
 	def get(orientation:SgOrientation):SgSpanInsets	=
-			orientation match {
-				case SgOrientation.Horizontal	=> x
-				case SgOrientation.Vertical		=> y
-			}
+		orientation match {
+			case SgOrientation.Horizontal	=> x
+			case SgOrientation.Vertical		=> y
+		}
 
 	def set(orientation:SgOrientation, it:SgSpanInsets):SgRectangleInsets	=
-			orientation match {
-				case SgOrientation.Horizontal	=> SgRectangleInsets xy (it, y)
-				case SgOrientation.Vertical		=> SgRectangleInsets xy (x, it)
-			}
+		orientation match {
+			case SgOrientation.Horizontal	=> SgRectangleInsets.xy(it, y)
+			case SgOrientation.Vertical		=> SgRectangleInsets.xy(x, it)
+		}
 
 	def modify(orientation:SgOrientation, it:SgSpanInsets=>SgSpanInsets):SgRectangleInsets	=
-			orientation match {
-				case SgOrientation.Horizontal	=> SgRectangleInsets xy (it(x), y)
-				case SgOrientation.Vertical		=> SgRectangleInsets xy (x, it(y))
-			}
+		orientation match {
+			case SgOrientation.Horizontal	=> SgRectangleInsets.xy(it(x), y)
+			case SgOrientation.Vertical		=> SgRectangleInsets.xy(x, it(y))
+		}
 
 	//------------------------------------------------------------------------------
 	//## awt conversion
 
 	def toAwtInsets:Insets	=
-			new Insets(
-				round(top).toInt,
-				round(left).toInt,
-				round(bottom).toInt,
-				round(right).toInt
-			)
+		new Insets(
+			round(top).toInt,
+			round(left).toInt,
+			round(bottom).toInt,
+			round(right).toInt
+		)
 }

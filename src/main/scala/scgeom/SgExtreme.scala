@@ -2,12 +2,12 @@ package scgeom
 
 object SgExtreme {
 	def trueStart(start:Boolean):SgExtreme	=
-			if (start)	Start
-			else		End
+		if (start)	Start
+		else		End
 
 	def trueEnd(end:Boolean):SgExtreme	=
-			if (end)	End
-			else		Start
+		if (end)	End
+		else		Start
 
 	//------------------------------------------------------------------------------
 
@@ -17,15 +17,15 @@ object SgExtreme {
 
 sealed trait SgExtreme {
 	def cata[T](start: =>T, end: =>T):T	=
-			this match {
-				case SgExtreme.Start	=> start
-				case SgExtreme.End	=> end
-			}
+		this match {
+			case SgExtreme.Start	=> start
+			case SgExtreme.End	=> end
+		}
 
 	def opposite:SgExtreme	=
-			this match {
-				case SgExtreme.Start	=> SgExtreme.End
-				case SgExtreme.End		=> SgExtreme.Start
-			}
+		this match {
+			case SgExtreme.Start	=> SgExtreme.End
+			case SgExtreme.End		=> SgExtreme.Start
+		}
 }
 

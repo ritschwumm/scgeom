@@ -26,10 +26,10 @@ object SgSpanTransform {
 
 final case class SgSpanTransform private (factor:Double, summand:Double) {
 	def inverse:SgSpanTransform	=
-			SgSpanTransform factorSummand (
-				1			/ factor,
-				-summand	/ factor
-			)
+		SgSpanTransform.factorSummand(
+			1			/ factor,
+			-summand	/ factor
+		)
 
 	//------------------------------------------------------------------------------
 
@@ -40,14 +40,14 @@ final case class SgSpanTransform private (factor:Double, summand:Double) {
 	def offset(value:Double):Double		= value + summand
 
 	def transformSpan(value:SgSpan):SgSpan	=
-			SgSpan startEnd (
-				transform(value.start),
-				transform(value.end)
-			)
+		SgSpan.startEnd(
+			transform(value.start),
+			transform(value.end)
+		)
 
 	//------------------------------------------------------------------------------
 	//## factory dsl
 
 	def rectangleTransformWith(y:SgSpanTransform):SgRectangleTransform	=
-			SgRectangleTransform fromSpanTransforms (this, y)
+		SgRectangleTransform.fromSpanTransforms(this, y)
 }

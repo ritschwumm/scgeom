@@ -20,38 +20,38 @@ object SgPoint {
 	//## orientation factory
 
 	def orientationWith(orientation:SgOrientation, master:Double, slave:Double):SgPoint	=
-			orientation match {
-				case SgOrientation.Horizontal	=> SgPoint(master,	slave)
-				case SgOrientation.Vertical		=> SgPoint(slave,	master)
-			}
+		orientation match {
+			case SgOrientation.Horizontal	=> SgPoint(master,	slave)
+			case SgOrientation.Vertical		=> SgPoint(slave,	master)
+		}
 
 	//------------------------------------------------------------------------------
 	//## pair conversion
 
 	def fromPair(it:(Double,Double)):SgPoint	=
-			SgPoint(it._1, it._2)
+		SgPoint(it._1, it._2)
 
 	def toPair(it:SgPoint):(Double,Double)	=
-			it.toPair
+		it.toPair
 
 	//------------------------------------------------------------------------------
 	//## awt conversion
 
 	def fromAwtPoint2D(it:Point2D):SgPoint	=
-			SgPoint(it.getX, it.getY)
+		SgPoint(it.getX, it.getY)
 
 	def toAwtPoint2D(it:SgPoint):Point2D	=
-			it.toAwtPoint2D
+		it.toAwtPoint2D
 
 	def fromAwtDimension2D(it:Dimension2D):SgPoint	=
-			SgPoint(it.getWidth, it.getHeight)
+		SgPoint(it.getWidth, it.getHeight)
 
 	def toAwtDimension2D(it:SgPoint):Dimension2D	=
-			it.toAwtDimension2D
+		it.toAwtDimension2D
 }
 
 final case class SgPoint(x:Double, y:Double) {
-	def unary_-():SgPoint	= SgPoint(-x, -y)
+	def unary_- :SgPoint	= SgPoint(-x, -y)
 	def swap:SgPoint		= SgPoint(y,x)
 
 	def addInverse:SgPoint	= SgPoint(-x, -y)
@@ -111,31 +111,31 @@ final case class SgPoint(x:Double, y:Double) {
 	//------------------------------------------------------------------------------
 	//## factory dsl
 
-	def lineTo(that:SgPoint):SgLine				= SgLine		startEnd	(this, that)
-	def lineBy(size:SgPoint):SgLine				= SgLine		startBy		(this, size)
-	def rectangleTo(that:SgPoint):SgRectangle	= SgRectangle	topLeftTo	(this, that)
-	def rectangleBy(size:SgPoint):SgRectangle	= SgRectangle	topLeftBy	(this, size)
+	def lineTo(that:SgPoint):SgLine				= SgLine		.startEnd	(this, that)
+	def lineBy(size:SgPoint):SgLine				= SgLine		.startBy	(this, size)
+	def rectangleTo(that:SgPoint):SgRectangle	= SgRectangle	.topLeftTo	(this, that)
+	def rectangleBy(size:SgPoint):SgRectangle	= SgRectangle	.topLeftBy	(this, size)
 
 	//------------------------------------------------------------------------------
 	//## orientation lens
 
 	def get(orientation:SgOrientation):Double	=
-			orientation match {
-				case SgOrientation.Horizontal	=> x
-				case SgOrientation.Vertical		=> y
-			}
+		orientation match {
+			case SgOrientation.Horizontal	=> x
+			case SgOrientation.Vertical		=> y
+		}
 
 	def set(orientation:SgOrientation, it:Double):SgPoint	=
-			orientation match {
-				case SgOrientation.Horizontal	=> SgPoint(it, y)
-				case SgOrientation.Vertical		=> SgPoint(x, it)
-			}
+		orientation match {
+			case SgOrientation.Horizontal	=> SgPoint(it, y)
+			case SgOrientation.Vertical		=> SgPoint(x, it)
+		}
 
 	def modify(orientation:SgOrientation, it:Double=>Double):SgPoint	=
-			orientation match {
-				case SgOrientation.Horizontal	=> SgPoint(it(x), y)
-				case SgOrientation.Vertical		=> SgPoint(x, it(y))
-			}
+		orientation match {
+			case SgOrientation.Horizontal	=> SgPoint(it(x), y)
+			case SgOrientation.Vertical		=> SgPoint(x, it(y))
+		}
 
 	//------------------------------------------------------------------------------
 	//## internal conversion

@@ -44,5 +44,5 @@ final case class SgArea private (delegate:Area) {
 
 	@SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
 	private def cloneDelegate:Area	=
-			delegate.clone.asInstanceOf[Area]
+		delegate.clone.asInstanceOf[Area]
 }
