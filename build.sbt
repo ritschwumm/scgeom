@@ -1,8 +1,8 @@
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.45.0"
+version			:= "0.46.0"
 
-scalaVersion	:= "2.13.3"
+scalaVersion	:= "2.13.4"
 scalacOptions	++= Seq(
 	"-feature",
 	"-deprecation",
@@ -13,7 +13,7 @@ scalacOptions	++= Seq(
 
 conflictManager	:= ConflictManager.strict withOrganization "^(?!(org\\.scala-lang|org\\.scala-js)(\\..*)?)$"
 libraryDependencies	++= Seq(
-	"org.specs2"	%%	"specs2-core"	% "4.10.0"	% "test"
+	"org.specs2"	%%	"specs2-core"	% "4.10.5"	% "test"
 )
 
 wartremoverErrors ++= Seq(
