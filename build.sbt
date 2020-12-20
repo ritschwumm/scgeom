@@ -1,6 +1,8 @@
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.46.0"
+version			:= "0.47.0"
 
 scalaVersion	:= "2.13.4"
 scalacOptions	++= Seq(
@@ -13,8 +15,10 @@ scalacOptions	++= Seq(
 
 conflictManager	:= ConflictManager.strict withOrganization "^(?!(org\\.scala-lang|org\\.scala-js)(\\..*)?)$"
 libraryDependencies	++= Seq(
-	"org.specs2"	%%	"specs2-core"	% "4.10.5"	% "test"
+	"io.monix"	%% "minitest"	% "2.9.1"	% "test"
 )
+
+testFrameworks	+= new TestFramework("minitest.runner.Framework")
 
 wartremoverErrors ++= Seq(
 	Wart.AsInstanceOf,
