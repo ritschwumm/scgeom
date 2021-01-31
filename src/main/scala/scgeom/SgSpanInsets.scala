@@ -8,12 +8,6 @@ object SgSpanInsets {
 	val one		= symmetric(1)
 
 	//------------------------------------------------------------------------------
-	//## new factory
-
-	@deprecated("use startEnd", "0.40.0")
-	def apply(start:Double, end:Double):SgSpanInsets	=  startEnd(start, end)
-
-	//------------------------------------------------------------------------------
 	//## component factory
 
 	def symmetric(size:Double):SgSpanInsets	=

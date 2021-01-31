@@ -4,18 +4,9 @@ object SgSpanTransform {
 	val identity	= factorSummand(1.0, 0.0)
 
 	//------------------------------------------------------------------------------
-	//## new factory
-
-	@deprecated("use factorSummand", "0.40.0")
-	def apply(factor:Double, summand:Double):SgSpanTransform	= factorSummand(factor, summand)
-
-	//------------------------------------------------------------------------------
 	//## component factory
 
 	def factorSummand(factor:Double, summand:Double):SgSpanTransform	= new SgSpanTransform(factor, summand)
-
-	@deprecated("use fromTo", "0.40.0")
-	def fromSpans(from:SgSpan, to:SgSpan):SgSpanTransform	= fromTo(from, to)
 
 	def fromTo(from:SgSpan, to:SgSpan):SgSpanTransform	= {
 		val factor	= to.size / from.size

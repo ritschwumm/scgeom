@@ -2,7 +2,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.47.0"
+version			:= "0.48.0"
 
 scalaVersion	:= "2.13.4"
 scalacOptions	++= Seq(
@@ -15,7 +15,7 @@ scalacOptions	++= Seq(
 
 conflictManager	:= ConflictManager.strict withOrganization "^(?!(org\\.scala-lang|org\\.scala-js)(\\..*)?)$"
 libraryDependencies	++= Seq(
-	"io.monix"	%% "minitest"	% "2.9.1"	% "test"
+	"io.monix"	%% "minitest"	% "2.9.2"	% "test"
 )
 
 testFrameworks	+= new TestFramework("minitest.runner.Framework")

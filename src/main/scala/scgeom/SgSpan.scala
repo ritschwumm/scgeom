@@ -8,12 +8,6 @@ object SgSpan {
 	val one		= startEnd(0, 1)
 
 	//------------------------------------------------------------------------------
-	//## new factory
-
-	@deprecated("use startEnd", "0.40.0")
-	def apply(start:Double, end:Double):SgSpan	= startEnd(start, end)
-
-	//------------------------------------------------------------------------------
 	//## component factory
 
 	def startZeroBy(size:Double):SgSpan	=

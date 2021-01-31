@@ -10,12 +10,6 @@ object SgLine {
 	val one		= startEnd(SgPoint.zero, SgPoint.one)
 
 	//------------------------------------------------------------------------------
-	//## new factory
-
-	@deprecated("use startEnd", "0.40.0")
-	def apply(start:SgPoint, end:SgPoint):SgLine	= startEnd(start, end)
-
-	//------------------------------------------------------------------------------
 	//## component factory
 
 	def horizontal(x:SgSpan, y:Double):SgLine	=

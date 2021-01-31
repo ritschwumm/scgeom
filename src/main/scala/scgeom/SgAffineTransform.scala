@@ -5,12 +5,6 @@ import java.awt.geom.{ Point2D, AffineTransform, NoninvertibleTransformException
 
 object SgAffineTransform {
 	//------------------------------------------------------------------------------
-	//## new factory
-
-	@deprecated("use unsafeFromAwtAffineTransform", "0.40.0")
-	def apply(delegate:AffineTransform):SgAffineTransform	= unsafeFromAwtAffineTransform(delegate)
-
-	//------------------------------------------------------------------------------
 	//## factory
 
 	val identity:SgAffineTransform	= unsafeFromAwtAffineTransform(new AffineTransform)

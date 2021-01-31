@@ -10,12 +10,6 @@ object SgRectangle {
 	val one		= xy(SgSpan.one,	SgSpan.one)
 
 	//------------------------------------------------------------------------------
-	//## new factoey
-
-	@deprecated("use xy", "0.40.0")
-	def apply(x:SgSpan, y:SgSpan):SgRectangle	= xy(x, y)
-
-	//------------------------------------------------------------------------------
 	//## component factory
 
 	def xy(x:SgSpan, y:SgSpan):SgRectangle	= new SgRectangle(x, y)

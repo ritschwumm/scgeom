@@ -12,12 +12,6 @@ object SgRectangleInsets {
 	val one		= symmetric(SgSpanInsets.one)
 
 	//------------------------------------------------------------------------------
-	//## new factory
-
-	@deprecated("use xy", "0.40.0")
-	def apply(x:SgSpanInsets, y:SgSpanInsets):SgRectangleInsets	= xy(x, y)
-
-	//------------------------------------------------------------------------------
 	//## component factory
 
 	def symmetric(size:SgSpanInsets):SgRectangleInsets	= xy(size, size)

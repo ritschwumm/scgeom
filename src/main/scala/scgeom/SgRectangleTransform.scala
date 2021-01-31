@@ -7,13 +7,6 @@ object SgRectangleTransform {
 	val identity	= factorSummand(SgPoint.one, SgPoint.zero)
 
 	//------------------------------------------------------------------------------
-	//## new factory
-
-	@deprecated("use factorSummand", "0.40.0")
-	def apply(factor:SgPoint, summand:SgPoint):SgRectangleTransform	=
-		factorSummand(factor, summand)
-
-	//------------------------------------------------------------------------------
 	//##compoment factory
 
 	def factorSummand(factor:SgPoint, summand:SgPoint):SgRectangleTransform	=

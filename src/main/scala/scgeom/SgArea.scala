@@ -5,12 +5,6 @@ import java.awt.geom.Area
 
 object SgArea {
 	//------------------------------------------------------------------------------
-	//## new factory
-
-	@deprecated("use unsafeFromAwtArea", "0.40.0")
-	def apply(delegate:Area):SgArea	= new SgArea(delegate)
-
-	//------------------------------------------------------------------------------
 	//## awt conversion
 
 	def fromAwtShape(shape:Shape):SgArea	= unsafeFromAwtArea(new Area(shape))
