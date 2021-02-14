@@ -34,21 +34,6 @@ object SgLine {
 		startEnd(end-size, end)
 
 	//------------------------------------------------------------------------------
-	//## extreme factory
-
-	def extremeTo(extreme:SgExtreme, master:SgPoint, slave:SgPoint):SgLine	=
-		extreme match {
-			case SgExtreme.Start	=> startEnd(master, slave)
-			case SgExtreme.End		=> startEnd(slave, master)
-		}
-
-	def extremeSize(extreme:SgExtreme, point:SgPoint, size:SgPoint):SgLine	=
-		extreme match {
-			case SgExtreme.Start	=> startBy(point, size)
-			case SgExtreme.End		=> endBy(point, size)
-		}
-
-	//------------------------------------------------------------------------------
 	//## awt conversion
 
 	def fromAwtLine2D(it:Line2D):SgLine	=
@@ -83,27 +68,6 @@ final case class SgLine private (start:SgPoint, end:SgPoint) {
 	// TODO
 	// def intersect(that:SgLine):Option[SgPoint]
 	// def intersectInside(that:SgLine):Option[SgPoint]
-
-	//------------------------------------------------------------------------------
-	//## extreme lens
-
-	def get(extreme:SgExtreme):SgPoint	=
-		extreme match {
-			case SgExtreme.Start	=> start
-			case SgExtreme.End		=> end
-		}
-
-	def set(extreme:SgExtreme, it:SgPoint):SgLine	=
-		extreme match {
-			case SgExtreme.Start	=> SgLine.startEnd(it, end)
-			case SgExtreme.End		=> SgLine.startEnd(start, it)
-		}
-
-	def modify(extreme:SgExtreme, it:SgPoint=>SgPoint):SgLine	=
-		extreme match {
-			case SgExtreme.Start	=> SgLine.startEnd(it(start), end)
-			case SgExtreme.End		=> SgLine.startEnd(start, it(end))
-		}
 
 	//------------------------------------------------------------------------------
 	//## awt conversion

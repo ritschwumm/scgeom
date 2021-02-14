@@ -2,7 +2,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.48.0"
+version			:= "0.49.0"
 
 scalaVersion	:= "2.13.4"
 scalacOptions	++= Seq(

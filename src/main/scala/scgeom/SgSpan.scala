@@ -27,21 +27,6 @@ object SgSpan {
 
 	def centerBy(center:Double, size:Double):SgSpan	=
 		startEnd(center-size/2, center+size/2)
-
-	//------------------------------------------------------------------------------
-	//## extreme factory
-
-	def extremeTo(extreme:SgExtreme, master:Double, slave:Double):SgSpan	=
-		extreme match {
-			case SgExtreme.Start	=> startEnd(master, slave)
-			case SgExtreme.End		=> startEnd(slave, master)
-		}
-
-	def extremeBy(extreme:SgExtreme, point:Double, size:Double):SgSpan	=
-		extreme match {
-			case SgExtreme.Start	=> startBy(point, size)
-			case SgExtreme.End		=> endBy(point, size)
-		}
 }
 
 final case class SgSpan private (start:Double, end:Double) {
@@ -145,25 +130,4 @@ final case class SgSpan private (start:Double, end:Double) {
 
 	def spanTransformTo(that:SgSpan):SgSpanTransform	=
 		SgSpanTransform.fromTo(this, that)
-
-	//------------------------------------------------------------------------------
-	//## extreme lens
-
-	def get(extreme:SgExtreme):Double	=
-		extreme match {
-			case SgExtreme.Start	=> start
-			case SgExtreme.End		=> end
-		}
-
-	def set(extreme:SgExtreme, it:Double):SgSpan	=
-		extreme match {
-			case SgExtreme.Start	=> SgSpan.startEnd(it, end)
-			case SgExtreme.End		=> SgSpan.startEnd(start, it)
-		}
-
-	def modify(extreme:SgExtreme, it:Double=>Double):SgSpan	=
-		extreme match {
-			case SgExtreme.Start	=> SgSpan.startEnd(it(start), end)
-			case SgExtreme.End		=> SgSpan.startEnd(start, it(end))
-		}
 }
