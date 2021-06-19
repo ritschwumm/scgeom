@@ -169,11 +169,15 @@ final case class SgRectangle private (x:SgSpan, y:SgSpan) {
 	//------------------------------------------------------------------------------
 	//## factory dsl
 
-	def rectangleTransformTo(that:SgRectangle):SgRectangleTransform	=
-		SgRectangleTransform.fromRectangles(this, that)
+	def linearTransformTo(that:SgRectangle):SgLinearTransform2D	=
+		SgLinearTransform2D.fromTo(this, that)
+
+	@deprecated("use SgLinearTransform2D", "0.50.0")
+	def rectangleTransformTo(that:SgRectangle):SgLinearTransform2D	=
+		linearTransformTo(that)
 
 	def affineTransformTo(that:SgRectangle):SgAffineTransform	=
-		rectangleTransformTo(that).toAffineTransform
+		linearTransformTo(that).toAffineTransform
 
 	//------------------------------------------------------------------------------
 	//## orientation lens

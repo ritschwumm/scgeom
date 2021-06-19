@@ -1,23 +1,23 @@
 package scgeom
 
-object SgSpanTransform {
+object SgLinearTransform1D {
 	val identity	= factorSummand(1.0, 0.0)
 
 	//------------------------------------------------------------------------------
 	//## component factory
 
-	def factorSummand(factor:Double, summand:Double):SgSpanTransform	= new SgSpanTransform(factor, summand)
+	def factorSummand(factor:Double, summand:Double):SgLinearTransform1D	= new SgLinearTransform1D(factor, summand)
 
-	def fromTo(from:SgSpan, to:SgSpan):SgSpanTransform	= {
+	def fromTo(from:SgSpan, to:SgSpan):SgLinearTransform1D	= {
 		val factor	= to.size / from.size
 		val summand	= to.start - from.start * factor
 		factorSummand(factor, summand)
 	}
 }
 
-final case class SgSpanTransform private (factor:Double, summand:Double) {
-	def inverse:SgSpanTransform	=
-		SgSpanTransform.factorSummand(
+final case class SgLinearTransform1D private (factor:Double, summand:Double) {
+	def inverse:SgLinearTransform1D	=
+		SgLinearTransform1D.factorSummand(
 			1			/ factor,
 			-summand	/ factor
 		)
@@ -39,6 +39,10 @@ final case class SgSpanTransform private (factor:Double, summand:Double) {
 	//------------------------------------------------------------------------------
 	//## factory dsl
 
-	def rectangleTransformWith(y:SgSpanTransform):SgRectangleTransform	=
-		SgRectangleTransform.fromSpanTransforms(this, y)
+	def transform2DWith(y:SgLinearTransform1D):SgLinearTransform2D	=
+		SgLinearTransform2D.xy(this, y)
+
+	@deprecated("use transform2DWith", "0.50.0")
+	def rectangleTransformWith(y:SgLinearTransform1D):SgLinearTransform2D	=
+		transform2DWith(y)
 }

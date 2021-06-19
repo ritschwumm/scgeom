@@ -1,6 +1,6 @@
 package scgeom
 
-object SgRectangleTransform {
+object SgLinearTransform2D {
 	//------------------------------------------------------------------------------
 	//## simple values
 
@@ -9,30 +9,39 @@ object SgRectangleTransform {
 	//------------------------------------------------------------------------------
 	//##compoment factory
 
-	def factorSummand(factor:SgPoint, summand:SgPoint):SgRectangleTransform	=
-		new SgRectangleTransform(factor, summand)
+	def factorSummand(factor:SgPoint, summand:SgPoint):SgLinearTransform2D	=
+		new SgLinearTransform2D(factor, summand)
 
 	//------------------------------------------------------------------------------
 
-	def fromRectangles(from:SgRectangle, to:SgRectangle):SgRectangleTransform	=
-		fromSpanTransforms(
-			SgSpanTransform.fromTo(from.x, to.x),
-			SgSpanTransform.fromTo(from.y, to.y)
+	def fromTo(from:SgRectangle, to:SgRectangle):SgLinearTransform2D	=
+		xy(
+			SgLinearTransform1D.fromTo(from.x, to.x),
+			SgLinearTransform1D.fromTo(from.y, to.y)
 		)
 
-	def fromSpanTransforms(x:SgSpanTransform, y:SgSpanTransform):SgRectangleTransform	=
+	@deprecated("use fromTo", "0.50.0")
+	def fromRectangles(from:SgRectangle, to:SgRectangle):SgLinearTransform2D	=
+		fromTo(from, to)
+
+	def xy(x:SgLinearTransform1D, y:SgLinearTransform1D):SgLinearTransform2D	=
 		factorSummand(
 			SgPoint(x.factor,	y.factor),
 			SgPoint(x.summand,	y.summand)
 		)
+
+	@deprecated("use fromXY", "0.50.0")
+	def fromSpanTransforms(x:SgLinearTransform1D, y:SgLinearTransform1D):SgLinearTransform2D	=
+		xy(x, y)
+
 }
 
-final case class SgRectangleTransform private (factor:SgPoint, summand:SgPoint) {
-	def x:SgSpanTransform	= SgSpanTransform.factorSummand(factor.x, summand.x)
-	def y:SgSpanTransform	= SgSpanTransform.factorSummand(factor.y, summand.y)
+final case class SgLinearTransform2D private (factor:SgPoint, summand:SgPoint) {
+	def x:SgLinearTransform1D	= SgLinearTransform1D.factorSummand(factor.x, summand.x)
+	def y:SgLinearTransform1D	= SgLinearTransform1D.factorSummand(factor.y, summand.y)
 
-	def inverse:SgRectangleTransform	=
-		SgRectangleTransform.factorSummand(
+	def inverse:SgLinearTransform2D	=
+		SgLinearTransform2D.factorSummand(
 			factor.mulInverse,
 			-(summand descale factor)
 		)

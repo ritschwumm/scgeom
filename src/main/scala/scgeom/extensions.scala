@@ -21,9 +21,6 @@ trait extensions {
 	implicit class BooleanSgExt(delegate:Boolean) {
 		def trueHorizontal:SgOrientation	= SgOrientation trueHorizontal	delegate
 		def trueVertical:SgOrientation		= SgOrientation trueVertical	delegate
-
-		def trueStart:SgExtreme	= SgExtreme trueStart	delegate
-		def trueEnd:SgExtreme	= SgExtreme trueEnd		delegate
 	}
 	*/
 

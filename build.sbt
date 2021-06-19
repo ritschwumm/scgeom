@@ -1,10 +1,12 @@
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
+ThisBuild / versionScheme := Some("early-semver")
+
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.49.0"
+version			:= "0.50.0"
 
-scalaVersion	:= "2.13.4"
+scalaVersion	:= "2.13.5"
 scalacOptions	++= Seq(
 	"-feature",
 	"-deprecation",
@@ -15,7 +17,7 @@ scalacOptions	++= Seq(
 
 conflictManager	:= ConflictManager.strict withOrganization "^(?!(org\\.scala-lang|org\\.scala-js)(\\..*)?)$"
 libraryDependencies	++= Seq(
-	"io.monix"	%% "minitest"	% "2.9.2"	% "test"
+	"io.monix"	%% "minitest"	% "2.9.3"	% "test"
 )
 
 testFrameworks	+= new TestFramework("minitest.runner.Framework")
