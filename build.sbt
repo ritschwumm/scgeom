@@ -4,20 +4,21 @@ ThisBuild / versionScheme := Some("early-semver")
 
 name			:= "scgeom"
 organization	:= "de.djini"
-version			:= "0.50.0"
+version			:= "0.51.0"
 
-scalaVersion	:= "2.13.5"
+scalaVersion	:= "2.13.6"
 scalacOptions	++= Seq(
 	"-feature",
 	"-deprecation",
 	"-unchecked",
 	"-Werror",
 	"-Xlint",
+	"-Xsource:3",
 )
 
 conflictManager	:= ConflictManager.strict withOrganization "^(?!(org\\.scala-lang|org\\.scala-js)(\\..*)?)$"
 libraryDependencies	++= Seq(
-	"io.monix"	%% "minitest"	% "2.9.3"	% "test"
+	"io.monix"	%% "minitest"	% "2.9.6"	% "test"
 )
 
 testFrameworks	+= new TestFramework("minitest.runner.Framework")

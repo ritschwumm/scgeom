@@ -130,8 +130,4 @@ final case class SgSpan private (start:Double, end:Double) {
 
 	def linearTransformTo(that:SgSpan):SgLinearTransform1D	=
 		SgLinearTransform1D.fromTo(this, that)
-
-	@deprecated("use SgLinearTransform2D", "0.50.0")
-	def spanTransformTo(that:SgSpan):SgSpanTransform	=
-		linearTransformTo(that)
 }

@@ -20,20 +20,11 @@ object SgLinearTransform2D {
 			SgLinearTransform1D.fromTo(from.y, to.y)
 		)
 
-	@deprecated("use fromTo", "0.50.0")
-	def fromRectangles(from:SgRectangle, to:SgRectangle):SgLinearTransform2D	=
-		fromTo(from, to)
-
 	def xy(x:SgLinearTransform1D, y:SgLinearTransform1D):SgLinearTransform2D	=
 		factorSummand(
 			SgPoint(x.factor,	y.factor),
 			SgPoint(x.summand,	y.summand)
 		)
-
-	@deprecated("use fromXY", "0.50.0")
-	def fromSpanTransforms(x:SgLinearTransform1D, y:SgLinearTransform1D):SgLinearTransform2D	=
-		xy(x, y)
-
 }
 
 final case class SgLinearTransform2D private (factor:SgPoint, summand:SgPoint) {

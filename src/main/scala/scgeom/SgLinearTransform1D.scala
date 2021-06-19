@@ -41,8 +41,4 @@ final case class SgLinearTransform1D private (factor:Double, summand:Double) {
 
 	def transform2DWith(y:SgLinearTransform1D):SgLinearTransform2D	=
 		SgLinearTransform2D.xy(this, y)
-
-	@deprecated("use transform2DWith", "0.50.0")
-	def rectangleTransformWith(y:SgLinearTransform1D):SgLinearTransform2D	=
-		transform2DWith(y)
 }
